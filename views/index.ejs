@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job application</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="registation">
+        <form class="main">
+            <h1 class="title">Job Application Form</h1>
+            <div class="basic">
+                <fieldset class="bd1">
+                    <legend class="l1">Baisc Details
+                    </legend>
+                    <div class="fields1">
+                        <div>
+                            <label>First Name:</label>
+                            <input type="text" name="" id="FirstName">
+                        </div>
+
+                        <div><label>Last Name:</label>
+                            <input type="text" name="" id="LastName">
+                        </div>
+
+
+
+                    </div>
+                    <div class="field2">
+                        <div><label>Designation:</label>
+                            <input type="text" name="" id="Designation">
+                        </div>
+                        <div>
+                            <label>Address-1:</label>
+                            <input type="text" name="" id="Address-1">
+                        </div>
+
+                    </div>
+                    <div class="field3">
+                        <div>
+                            <label>Email:</label>
+                            <input type="text" name="" id="email">
+                        </div>
+
+                        <div>
+                            <label>Address-2:</label>
+                            <input type="text" name="" id="Address-2">
+                        </div>
+
+                    </div>
+                    <div class="field4">
+                        <div>
+                            <label>Phone Number:</label>
+                            <input type="number" name="" id="Phone_Number">
+                        </div>
+
+                        <div>
+                            <label>City:</label>
+                            <input type="text" name="" id="City">
+                        </div>
+
+                    </div>
+                    <div class="field5">
+                        <div>
+                            <label>Zip-code:</label>
+                            <input type="text" name="" id="Zip-code">
+                        </div>
+
+
+
+                        <div>
+                            <label>Gender:</label>
+                            <input class="l-legend" type="radio" id="gChoice1" name="gender" value="male" />
+                            <label size="20px" for="gChoice1">Male</label>
+
+                            <input class="l-legend" type="radio" id="gChoice2" name="gender" value="phone" />
+                            <label for="gChoice2">Female</label>
+
+                            <input class="l-legend" type="radio" id="gChoice3" name="gender" value="mail" />
+                            <label for="gChoice3">Other </label>
+                        </div>
+
+                    </div>
+                    <div class="field6">
+                        <div><label for="Relationship">Relationship Status:</label>
+
+                            <select name="Relationship" id="Relationship">
+                                <% for(var i=0 ; i< relationship_menu.length;i++){ %>
+                                    <option value="<%= relationship_menu[i].option_value %>">
+                                        <%= relationship_menu[i].option_value %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>State:</label>
+                            <select name="State" id="State">
+                                <% for(var i=0 ; i< State_menu.length;i++){ %>
+                                    <option value="<%= State_menu[i].option_value %>">
+                                        <%= State_menu[i].option_value %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+                        <div>
+
+                            <label for="birthday">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob">
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="bd2">
+                    <legend class="l2">Education Detail</legend>
+                    <div class="field7" id="field7">
+
+                        <div class="edu">
+                            <div>
+                                <label>Name of Course</label>
+                                <input type="text" name="Course" id="Course">
+                            </div>
+                            <div>
+                                <label>Board/University</label>
+                                <input type="text" name="institution" id="institution">
+                            </div>
+                            <div>
+                                <label>Percentage Obtained</label>
+                                <input type="text" name="Percentage" id="Percentage">
+                            </div>
+                            <div>
+                                <label>Passing Year</label>
+                                <input type="text" name="Passing_Year" id="Passing_Year">
+                            </div>
+                        </div><br><br>
+
+
+                    </div>
+                    <div>
+                        <input class="btn1" type="button" value="Add Education" id="addEdu">
+                    </div>
+                </fieldset>
+
+                <fieldset class="bd2">
+                    <legend class="l2">Work Experience</legend>
+                    <div class="field8" id="field8">
+
+                        <div class="Work">
+                            <div>
+                                <label>Name of company</label>
+                                <input type="text" name="company" id="company">
+                            </div>
+                            <div>
+                                <label>Designation</label>
+                                <input type="text" name="Designation" id="Designation">
+                            </div>
+                            <div>
+                                <label>From</label>
+                                <input type="date" name="start_date" id="start_date">
+                            </div>
+                            <div>
+                                <label>To</label>
+                                <input type="date" name="end_date" id="end_date">
+                            </div>
+                        </div><br><br>
+
+
+                    </div>
+                    <div>
+                        <input class="btn1" type="button" value="Add Experience" id="addExp">
+                    </div>
+                </fieldset>
+
+                <div class="bd3">
+                    <!-- <legend>hello</legend> -->
+
+                    <div class="parent">
+                        <fieldset class="lk" >
+                            <legend class="l3">Langauges Known</legend>
+                            <div id="lang_info">
+                                <div id="lang_cols" class="lk1">
+                                    <input type="checkbox" id="l1" name="l1" value="l1">
+                                    <label for="Hindi"> Hindi</label><br>
+                                    <input type="checkbox" id="Read" name="Read" value="Read">
+                                    <label for="Read"> Read</label><br>
+                                    <input type="checkbox" id="Write" name="Write" value="Write">
+                                    <label for="Write"> Write</label><br>
+                                    <input type="checkbox" id="Speak" name="Speak" value="Speak">
+                                    <label for="Speak"> Speak</label><br>
+    
+                                </div>
+                              
+                            </div>
+                            <div>
+                                <input class="btn2" type="button" value="Add Langauges" id="addlk" onclick="addLangaugeCard()">
+                            </div>
+                           
+                        </fieldset>
+                    </div>
+                    <div class="child">
+
+                        <fieldset class="tk">
+                            <legend class="l3">Technologies Known</legend>
+                            <div id="Tech_info">
+                                <div class="tk1">
+                                    <input type="checkbox" id="ReactJs" name="ReactJs" value="ReactJs">
+                                    <label for="ReactJs"> ReactJs</label><br>
+                                    <input type="radio" id="Bignner" name="Tech_skill" value="Bignner">
+                                    <label for="Bignner"> Bignner</label><br>
+                                    <input type="radio" id="intermediate" name="Tech_skill" value="intermediate">
+                                    <label for="intermediate"> intermediate</label><br>
+                                    <input type="radio" id="Expert" name="Tech_skill" value="Expert">
+                                    <label for="Expert"> Expert</label><br>
+    
+                                </div>
+                              
+                            </div>
+                            <div>
+                                <input class="btn2" type="button" value="Add Technologies" id="addlk" onclick="addTechnologyCard()">
+                            </div>
+                        </fieldset>
+
+
+
+                    </div>
+                 
+
+                </div>
+                <fieldset class="bd2">
+                    <legend class="l2">Reference Contact</legend>
+                    <div class="field10" id="field10">
+
+                        <div class="ref">
+                            <div>
+                                <label>Name</label>
+                                <input type="text" name="ref_name" id="ref_name">
+                            </div>
+                            <div>
+                                <label>Email</label>
+                                <input type="text" name="ref_email" id="ref_email">
+                            </div>
+                            <div>
+                                <label>Relation</label>
+                                <input type="text" name="Relation" id="Relation">
+                            </div>
+                        </div><br><br>
+
+
+                    </div>
+                    <div class="ref">
+                        <div>
+                            <label>Name</label>
+                            <input type="text" name="ref_name" id="ref_name">
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input type="text" name="ref_email" id="ref_email">
+                        </div>
+                        <div>
+                            <label>Relation</label>
+                            <input type="text" name="Relation" id="Relation">
+                        </div>
+                    </div><br><br>
+
+
+                </div>
+                    <!-- <div>
+                        <input class="btn1" type="button" value="Add Reference" id="ref_contact">
+                    </div> -->
+                </fieldset>
+
+
+
+                <fieldset class="bd2">
+                    <legend class="l2">Preferences</legend>
+                    <div class="field8" id="field11">
+
+                        <div class="field8.1">
+                            <label> Prefered Location</label> &nbsp;
+                            <select multiple>
+                                <option value="Ahmedabad">Ahmedabad</option>
+                                <option value="Rajkot">Rajkot</option>
+                                <option value="Surat">Surat</option>
+                                <option value="Vadodara">Vadodara</option>
+                            </select>
+                        </div>
+
+                        <div class="field8.1">
+                            <label>Notice Period</label>&nbsp;
+                            <input type="text"  id="Notice_Period">
+                            <label>Expacted CTC</label>&nbsp;
+                            <input type="text"  id="Expacted_CTC">
+                            <label>Current CTC</label>&nbsp;
+                            <input type="text"  id="Current_CTC">
+                        </div>
+                        <div class="field8.1">
+                            <label>Department</label>
+                            <select name="Department" id="Department">
+                                <option value="Digital_Marketing">Digital Marketing</option>
+                                <option value="Information_Tech">Software Developer</option>
+                                <option value="Hr">Human Resources</option>
+                                <option value="Research">Research</option>
+                                <option value="Analyst">Analyst</option>
+                            </select>
+                        </div>
+
+                    </div>
+                
+                </fieldset>
+            </div>
+
+
+    </div>
+      
+    </div>
+    </form>
+    </div>
+</body>.
+<script src="/js/app.js"></script>
+
+</html>
