@@ -3,12 +3,12 @@ document.getElementById("addEdu").addEventListener('click', () => {
     <div>
         <label>Name of Course</label>
         <select class="cc" name="Course" id="Course">
-                                <% for(var i=0 ; i< Course.length;i++){ %>
-                                    <option value="<%= Course[i].course %>">
-                                        <%= Course[i].course %>
-                                    </option>
-                                    <% } %>
-                                </select>
+        <% for(var i=0 ; i< Course.length;i++){ %>
+            <option value="<%= Course[i].option_value %>">
+                <%= Course[i].option_value %>
+            </option>
+            <% } %>
+    </select>
     </div>
     <div>
         <label>Board/University</label>

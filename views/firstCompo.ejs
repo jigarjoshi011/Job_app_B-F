@@ -27,11 +27,11 @@
                     <div class="fields1">
                         <div>
                             <label>First Name:</label>
-                            <input type="text" name="" id="FirstName">
+                            <input type="text" name="fname" id="FirstName">
                         </div>
 
                         <div><label>Last Name:</label>
-                            <input type="text" name="" id="LastName">
+                            <input type="text" name="lname" id="LastName">
                         </div>
 
 
@@ -39,42 +39,42 @@
                     </div>
                     <div class="field2">
                         <div><label>Designation:</label>
-                            <input type="text" name="" id="Designation">
+                            <input type="text" name="Designation" id="Designation">
                         </div>
                         <div>
                             <label>Address-1:</label>
-                            <input type="text" name="" id="Address-1">
+                            <input type="text" name="Address" id="Address-1">
                         </div>
 
                     </div>
                     <div class="field3">
                         <div>
                             <label>Email:</label>
-                            <input type="text" name="" id="email">
+                            <input type="text" name="Email" id="email">
                         </div>
 
                         <div>
                             <label>Address-2:</label>
-                            <input type="text" name="" id="Address-2">
+                            <input type="text" name="pAddress" id="Address-2">
                         </div>
 
                     </div>
                     <div class="field4">
                         <div>
                             <label>Phone Number:</label>
-                            <input type="number" name="" id="Phone_Number">
+                            <input type="number" name="phnumber" id="Phone_Number">
                         </div>
 
                         <div>
                             <label>City:</label>
-                            <input type="text" name="" id="City">
+                            <input type="text" name="City" id="City">
                         </div>
 
                     </div>
                     <div class="field5">
                         <div>
                             <label>Zip-code:</label>
-                            <input type="text" name="" id="Zip-code">
+                            <input type="text" name="Zipcode" id="Zip-code">
                         </div>
 
 
@@ -137,8 +137,8 @@
                                 <label>Name of Course</label>
                                 <select class="cc" name="Course" id="Course">
                                     <% for(var i=0 ; i< Course.length;i++){ %>
-                                        <option value="<%= Course[i].course %>">
-                                            <%= Course[i].course %>
+                                        <option value="<%= Course[i].option_value %>">
+                                            <%= Course[i].option_value %>
                                         </option>
                                         <% } %>
                                 </select>
@@ -170,29 +170,33 @@
 
                 <div class="bd3">
                     <!-- <legend>hello</legend> -->
-
                     <div class="parent">
                         <fieldset class="lk">
                             <legend class="l3">Langauges Known</legend>
                             <div id="lang_info">
                                 <% for (let i=0; i < Langauges.length; i++) { %>
                                     <div id="lang_cols" class="lk1">
-                                        <input type="checkbox" id="l1" name="lang<%= i %>" value="l1">
-                                        <label for="Hindi">
+                                        <label for="<%= Langauges[i].option_value  %>">
                                             <%= Langauges[i].option_value %>
-                                        </label><br>
-                                        <input type="checkbox" id="Read" name="Read<%= i %>" value="Read">
-                                        <label for="Read"> Read</label><br>
-                                        <input type="checkbox" id="Write" name="Write<%= i %>" value="Write">
-                                        <label for="Write"> Write</label><br>
-                                        <input type="checkbox" id="Speak" name="Speak<%= i %>" value="Speak">
-                                        <label for="Speak"> Speak</label><br>
+                                        </label>
+                                        <input type="checkbox" id=" <%= Langauges[i].option_value %>_parent"
+                                            name="<%= Langauges[i].option_value %>"
+                                            value="<%= Langauges[i].option_value %>" onclick="selectAll(this)">
+                                        <label for="read"> read</label><br>
+                                        <input type="checkbox" id="<%= Langauges[i].option_value %>"
+                                            name="<%=  Langauges[i].option_value %>r" value="10"
+                                            onclick="updateParent(this)">
+                                        <label for="write"> write</label><br>
+                                        <input type="checkbox" id="<%= Langauges[i].option_value %>"
+                                            name="<%=  Langauges[i].option_value %>w" value="10"
+                                            onclick="updateParent(this)">
+                                        <label for="speak"> speak</label><br>
+                                        <input type="checkbox" id="<%= Langauges[i].option_value %>"
+                                            name="<%=  Langauges[i].option_value %>s" value="10"
+                                            onclick="updateParent(this)">
                                     </div>
                                     <% } %>
-
                             </div>
-
-
 
                         </fieldset>
                     </div>
@@ -203,16 +207,18 @@
                             <div id="Tech_info">
                                 <% for (let i=0; i < Tech.length; i++) { %>
                                     <div class="tk1">
-                                        <input type="checkbox" id="ReactJs" name="ReactJs<%= i %>" value="ReactJs">
-                                        <label for="ReactJs">
+                                        <input type="checkbox" id="<%= Tech[i].option_value  %>" name="<%= Tech[i].option_value %>" value="<%= Tech[i].option_value  %>">
+                                        <label for="<%= Tech[i].option_value  %>">
                                             <%= Tech[i].option_value %>
                                         </label><br>
-                             
-                                        <input type="radio" id="Bignner" name="Tech_skill<%= i %>" value="Bignner">
+
+                                        <input type="radio" id="Bignner"
+                                            name="<%= Tech[i].option_value%>a" value="Bignner">
                                         <label for="Bignner"> Bignner</label><br>
-                                        <input type="radio" id="intermediate" name="Tech_skill<%= i %>" value="intermediate">
+                                        <input type="radio" id="intermediate"
+                                            name="<%= Tech[i].option_value%>a" value="Intermediate">
                                         <label for="intermediate"> intermediate</label><br>
-                                        <input type="radio" id="Expert" name="Tech_skill<%= i %>" value="Expert">
+                                        <input type="radio" id="Expert" name="<%= Tech[i].option_value%>a" value="Expert">
                                         <label for="Expert"> Expert</label><br>
 
                                     </div>
@@ -283,7 +289,7 @@
                                     <%= Loc[i].option_value %>
                                 </option>
                                 <% } %>
-                          
+
                     </div>
 
                     <div class="field8.1">
@@ -313,7 +319,7 @@
 
     </div>
     </form>
-    
+
 
     </div>
     </form>
@@ -326,8 +332,8 @@
         <label>Name of Course</label>
         <select class="cc" name="Course" id="Course">
                                 <% for(var i=0 ; i< Course.length;i++){ %>
-                                    <option value="<%= Course[i].course %>">
-                                        <%= Course[i].course %>
+                                    <option value="<%= Course[i].option_value %>">
+                                        <%= Course[i].option_value %>
                                     </option>
                                     <% } %>
                                 </select>
@@ -346,6 +352,30 @@
     </div><br><br><br>
 </div>`)
     })
+
+
+
+
+
+
+    function updateParent(language) {
+        const languageClass = language.id;
+        console.log(languageClass);
+        let ans = true;
+        const parentElement = document.querySelector(`#${languageClass}_parent`);
+        parentElement.checked = true;
+
+
+    }
+
+    function selectAll(language) {
+        console.log(language.name);
+        if (!language.checked) {
+            document.querySelectorAll(`#${language.name}`).forEach((lan) => {
+                lan.checked = false;
+            })
+        }
+    }
 </script>
 
 </html>
