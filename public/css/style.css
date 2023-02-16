@@ -185,6 +185,7 @@
     text-align: center;
 }
 .field8{
+    margin: 30px;
     display: flex;
    justify-content: space-evenly;
 }
@@ -195,4 +196,15 @@
 
 .cc{
     width: 180px;
+}
+
+.name{
+    display: flex;
+    justify-content: center;
+}
+
+
+.submit{
+    
+    margin: 30px;
 }

@@ -10,7 +10,7 @@
     <style>
         .submit input {
 
-            margin: auto;
+            margin: 50px;
             display: block;
         }
     </style>
@@ -207,18 +207,20 @@
                             <div id="Tech_info">
                                 <% for (let i=0; i < Tech.length; i++) { %>
                                     <div class="tk1">
-                                        <input type="checkbox" id="<%= Tech[i].option_value  %>" name="<%= Tech[i].option_value %>" value="<%= Tech[i].option_value  %>">
+                                        <input type="checkbox" id="<%= Tech[i].option_value  %>"
+                                            name="<%= Tech[i].option_value %>" value="<%= Tech[i].option_value  %>">
                                         <label for="<%= Tech[i].option_value  %>">
                                             <%= Tech[i].option_value %>
                                         </label><br>
 
-                                        <input type="radio" id="Bignner"
-                                            name="<%= Tech[i].option_value%>a" value="Bignner">
+                                        <input type="radio" id="Bignner" name="<%= Tech[i].option_value%>a"
+                                            value="Bignner">
                                         <label for="Bignner"> Bignner</label><br>
-                                        <input type="radio" id="intermediate"
-                                            name="<%= Tech[i].option_value%>a" value="Intermediate">
+                                        <input type="radio" id="intermediate" name="<%= Tech[i].option_value%>a"
+                                            value="Intermediate">
                                         <label for="intermediate"> intermediate</label><br>
-                                        <input type="radio" id="Expert" name="<%= Tech[i].option_value%>a" value="Expert">
+                                        <input type="radio" id="Expert" name="<%= Tech[i].option_value%>a"
+                                            value="Expert">
                                         <label for="Expert"> Expert</label><br>
 
                                     </div>
@@ -269,61 +271,61 @@
                             <input type="text" name="Relation2" id="Relation">
                         </div>
                     </div><br><br>
+                </fieldset>
 
+                <fieldset class="bd2">
+                    <legend class="l2">Preferences</legend>
+                    <div class="field8" id="field11">
+                        <div>
+                            <label>Department</label>
+                            <select name="Department" id="Department">
+                                <% for(var i=0 ; i< Dept.length;i++){ %>
+                                    <option value="<%= Dept[i].option_value %>">
+                                        <%= Dept[i].option_value %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+
+
+
+                        <div>
+
+                            <label>Expacted CTC</label>&nbsp;
+                            <input name="Expacted_CTC" type="text" id="Expacted_CTC">
+                            <label>Current CTC</label>&nbsp;
+                            <input name="Current_CTC" type="text" id="Current_CTC">
+                        </div>
+
+                        <label> Prefered Location</label> &nbsp;
+                        <select multiple name="loc_name">
+                            <% for(var i=0 ; i< Loc.length;i++){ %>
+                                <option  value="<%= Loc[i].option_value %>">
+                                    <%= Loc[i].option_value %>
+                                </option>
+                                <% } %>
+                        </select>
+
+                    </div>
+
+                </fieldset>
 
             </div>
             <!-- <div>
                         <input class="btn1" type="button" value="Add Reference" id="ref_contact">
                     </div> -->
-            </fieldset>
 
-            <fieldset class="bd2">
-                <legend class="l2">Preferences</legend>
-                <div class="field8" id="field11">
 
-                    <div class="field8.1">
-                        <label> Prefered Location</label> &nbsp;
-                        <select multiple>
-                            <% for(var i=0 ; i< Loc.length;i++){ %>
-                                <option name="<%= Loc[i].option_value %>" value="<%= Loc[i].option_value %>">
-                                    <%= Loc[i].option_value %>
-                                </option>
-                                <% } %>
 
-                    </div>
 
-                    <div class="field8.1">
-                        <label>Notice Period</label>&nbsp;
-                        <input type="text" id="Notice_Period">
-                        <label>Expacted CTC</label>&nbsp;
-                        <input type="text" id="Expacted_CTC">
-                        <label>Current CTC</label>&nbsp;
-                        <input type="text" id="Current_CTC">
-                    </div>
-                    <div class="field8.1">
-                        <label>Department</label>
-                        <select name="Department" id="Department">
-                            <% for(var i=0 ; i< Dept.length;i++){ %>
-                                <option value="<%= Dept[i].option_value %>">
-                                    <%= Dept[i].option_value %>
-                                </option>
-                                <% } %>
-                        </select>
-                    </div>
 
-                </div>
+            <div class="submit"><input type="submit" value="Submit"></div>
 
-            </fieldset>
+
+        </form>
     </div>
-    <div class="submit"><input type="submit" value="Submit"></div>
-
-    </div>
-    </form>
 
 
-    </div>
-    </form>
-    </div>
 </body>.
 <script>
     document.getElementById("addEdu").addEventListener('click', () => {

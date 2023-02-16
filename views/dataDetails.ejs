@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body{
+            margin: 20px;
+            background-color: #f3f3f3;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .card{
+            margin-bottom: 20px;
+        }
+        table {
+        border: 3px solid rgb(0, 82, 106);
+        width: 100%;
+        height: 100%;
+    }
+
+    tr {
+        background-color: rgb(203, 248, 255);
+        height: 6vh;
+    }
+
+    th {
+        background-color: rgb(249, 171, 171);
+    }
+
+    td,
+    th {
+        text-align: center;
+        border: 3px solid black;
+    }
+    b{
+        font-size: x-large;
+    }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="card-header">
+          <b>Personal Information </b>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Contact No</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Date </th>
+        
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<personal_data.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= personal_data[i].first_name %>
+                                    <%= personal_data[i].last_name %>
+                            </td>
+                            <td>
+                                <%= personal_data[i].contact_no %>
+                            </td>
+                            <td>
+                                <%= personal_data[i].address %>
+                            </td>
+                            <td>
+                                <%= personal_data[i].email %>
+                            </td>
+                            <td>
+                                <%= personal_data[i].gender %>
+                            </td>
+                            <td>
+                                <%= personal_data[i].created_at.toString().substring(0, 25) %>
+                            </td>
+                        </tr>
+        
+                        <% } %>
+                </tbody>
+                </table>
+            </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <b>Educational Information </b>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Course</th>
+                        <th scope="col">Board</th>
+                        <th scope="col">Passing Year</th>
+                        <th scope="col">Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<education_data.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= education_data[i].course %>
+                            </td>
+                            <td>
+                                <%= education_data[i].board %>
+                            </td>
+                            <td>
+                                <%= education_data[i].passing_year %>
+                            </td>
+                            <td>
+                                <%= education_data[i].percentage %> %
+                            </td>
+                        </tr>
+        
+                        <% } %>
+                </tbody>
+                </table>
+            </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-header">
+          <b>Languages Known Information </b>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Language</th>
+                        <th scope="col">Read</th>
+                        <th scope="col">Write</th>
+                        <th scope="col">Speak</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<language_data.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= language_data[i].language_name  %>
+                            </td>
+                            <td>
+                                <%= language_data[i].read_lang %>
+                            </td>
+                            <td>
+                                <%= language_data[i].write_lang %>
+                            </td>
+                            <td>
+                                <%= language_data[i].speak %> 
+                            </td>
+                        </tr>
+        
+                        <% } %>
+                </tbody>
+                </table>
+            </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <b>References Information </b>
+        </div>
+        <div class="card-body">
+            <center>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Relation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<reference_data.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= reference_data[i].name %>
+                            </td>
+                            <td>
+                                <%= reference_data[i].email %>
+                            </td>
+                            <td>
+                                <%= reference_data[i].relation %>
+                            </td>
+                        </tr>
+        
+                        <% } %>
+                </tbody>
+                </table>
+            </center>
+            </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <b>Preferences Information </b>
+        </div>
+        <div class="card-body">
+            <center>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Preferred Locations</th>
+                        <th scope="col">Current CTC</th>
+                        <th scope="col">Expected CTC</th>
+                        <!-- <th scope="col">Notice Period</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<CTC_data.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= CTC_data[i].Preferred %>
+                            </td>
+                            <td>
+                                <%= CTC_data[i].Current_CTC %>
+                            </td>
+                            <td>
+                                <%= CTC_data[i].Expected_CTC %>
+                            </td>
+                        </tr>
+        
+                        <% } %>
+                </tbody>
+                </table>
+            </center>
+            </div>
+      </div>
+    
+</body>
+</html>
