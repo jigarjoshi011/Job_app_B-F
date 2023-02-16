@@ -265,16 +265,94 @@ function allpost() {
 allpost();
 
 
-
+let currStr;
 
 app.get('/showall', (req, res) => {
 
 
   conn.query(`SELECT * FROM personal_info order by id desc`, (err, ans) => {
     if (err) return console.log(err.message);
-    res.render("showall", { ans, searchString: "" });
+    res.render("showall", { ans, currStr: "" });
   })
 })
+app.post('/find', (req, res) => {
+  let currStr = req.body.search_query 
+  let name = "";
+  let arr = ['^', '$', '&'];
+ 
+
+  console.log(currStr);
+
+  var count = 0;
+  for (let i = 0; i < currStr.length; i++) {
+      if (arr.includes(currStr[i])) {
+          name += " " + currStr[i];
+          count++;
+      }
+      else {
+          name += currStr[i];
+      }
+  }
+
+
+
+
+  let currname = name.split(" ")
+
+  let queryStr = ``;
+  currname.forEach(name => {
+      if (name[0] == '^') {
+          count--;
+
+          if(count)
+          queryStr += `first_name LIKE '${name.slice(1)}%' AND `
+          else {
+              queryStr += `first_name LIKE '${name.slice(1)}%'`
+          }
+      }
+    
+
+
+      if (name[0] == '$') {
+          count--
+          if(count){
+              queryStr += `last_name Like '${name.slice(1)}%' AND `
+
+          }
+          else {
+              queryStr += `last_lame Like '${name.slice(1)}%' `
+          }
+          
+      }
+     
+      if (name[0] == '&') {
+          
+          count--;
+          if(count){
+              queryStr += `city Like '${name.slice(1)}%' AND `
+          }
+          else {
+              queryStr += `city Like '${name.slice(1)}%'`
+          }
+
+      }
+     
+
+  })
+  console.log(currStr);
+
+  conn.query(`select * from personal_info where ${queryStr}`, (err, result) => {
+      if (err) return err.message
+      else {
+          res.render('showallSearch', { data: result, currStr })
+      }
+  })
+
+
+
+})
+
+
 
 
 
@@ -324,8 +402,6 @@ app.get('/dataDetails/:id',(req,res)=>{
 
   })
 })
-
-
 
 
 

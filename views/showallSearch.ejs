@@ -44,13 +44,14 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
         text-align: center;
         border: 3px solid black;
     }
+
 </style>
 
 <body>
     <h1 class="he">Welcome to Admin Database</h1>
 
-    <form action="/find" method="post">
-        <input type="text" value="<%= currStr %>" name="search_query">
+    <form action="/find" method="post" style="margin: 30px;">
+        <input type="text" value="<%= currStr %>" name="search_query" style="display: flex; justify-content: center;">
         <input type="submit" value="Search">
     </form>
 
@@ -72,31 +73,31 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
 
             </tr>
 
-            <% for(let i=0; i<ans.length; i++) { %>
+            <% for(let i=0; i<data.length; i++) { %>
                 <tr>
                     <th scope="row">
-                        <%= ans[i].id %>
+                        <%= data[i].id %>
                     </th>
                     <td>
-                        <%= ans[i].created_at.toString().substring(0, 25) %>
+                        <%= data[i].created_at.toString().substring(0, 25) %>
                     </td>
                     <td>
-                        <%= ans[i].first_name %>
-                            <%= ans[i].last_name %>
+                        <%= data[i].first_name %>
+                            <%= data[i].last_name %>
                     </td>
                     <td>
-                        <%= ans[i].contact_no %>
+                        <%= data[i].contact_no %>
                     </td>
                     <td>
-                        <%= ans[i].address.substring(0, 30) %>...
+                        <%= data[i].address.substring(0, 30) %>...
                     </td>
                     <td>
-                        <%= ans[i].email %>
+                        <%= data[i].email %>
                     </td>
                     <td>
-                        <%= ans[i].gender %>
+                        <%= data[i].gender %>
                     </td>
-                    <td><a href="/dataDetails/<%= ans[i].id %>">view<i class="bi bi-eye-fill"></i></a></td>
+                    <td><a href="/dataDetails/<%= data[i].id %>">view<i class="bi bi-eye-fill"></i></a></td>
                 </tr>
                 <% } %>
 
