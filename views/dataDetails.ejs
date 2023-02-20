@@ -1,50 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Details</title>
     <style>
-        body{
+        body {
             margin: 20px;
             background-color: #f3f3f3;
             font-family: Arial, Helvetica, sans-serif;
         }
-        .card{
+
+        .card {
             margin-bottom: 20px;
         }
+
         table {
-        border: 3px solid rgb(0, 82, 106);
-        width: 100%;
-        height: 100%;
-    }
+            border: 3px solid rgb(0, 82, 106);
+            width: 100%;
+            height: 100%;
+        }
 
-    tr {
-        background-color: rgb(203, 248, 255);
-        height: 6vh;
-    }
+        tr {
+            background-color: rgb(203, 248, 255);
+            height: 6vh;
+        }
 
-    th {
-        background-color: rgb(249, 171, 171);
-    }
+        th {
+            background-color: rgb(249, 171, 171);
+        }
 
-    td,
-    th {
-        text-align: center;
-        border: 3px solid black;
-    }
-    b{
-        font-size: x-large;
-    }
+        td,
+        th {
+            text-align: center;
+            border: 3px solid black;
+            font-size: x-large;
+        }
+
+        b {
+            font-size: x-large;
+        }
     </style>
 </head>
+
 <body>
 
 
     <div class="card">
         <div class="card-header">
-          <b>Personal Information </b>
+            <b>Personal Information </b>
         </div>
         <div class="card-body">
             <table class="table table-hover">
@@ -56,7 +62,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Date </th>
-        
+
                     </tr>
                 </thead>
                 <tbody>
@@ -82,16 +88,16 @@
                                 <%= personal_data[i].created_at.toString().substring(0, 25) %>
                             </td>
                         </tr>
-        
+
                         <% } %>
                 </tbody>
-                </table>
-            </div>
-      </div>
+            </table>
+        </div>
+    </div>
 
-      <div class="card">
+    <div class="card">
         <div class="card-header">
-          <b>Educational Information </b>
+            <b>Educational Information </b>
         </div>
         <div class="card-body">
             <table class="table table-hover">
@@ -113,23 +119,64 @@
                                 <%= education_data[i].board %>
                             </td>
                             <td>
-                                <%= education_data[i].passing_year %>
+                                <%= education_data[i].percentage %>
                             </td>
                             <td>
-                                <%= education_data[i].percentage %> %
+                                <%= education_data[i].passing_year %>%
                             </td>
+
                         </tr>
-        
+
                         <% } %>
                 </tbody>
-                </table>
-            </div>
-      </div>
+            </table>
+        </div>
+    </div>
 
 
-      <div class="card">
+
+    <div class="card">
         <div class="card-header">
-          <b>Languages Known Information </b>
+            <b>Educational Information </b>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Company</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<experience_data.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= experience_data[i].company_name %>
+                            </td>
+                            <td>
+                                <%= experience_data[i].Designation_name %>
+                            </td>
+                            <td>
+                                <%= experience_data[i].start_date %>
+                            </td>
+                            <td>
+                                <%= experience_data[i].end_date %>
+                            </td>
+
+                        </tr>
+
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header">
+            <b>Languages Known Information </b>
         </div>
         <div class="card-body">
             <table class="table table-hover">
@@ -145,7 +192,7 @@
                     <% for(let i=0; i<language_data.length; i++) { %>
                         <tr>
                             <td>
-                                <%= language_data[i].language_name  %>
+                                <%= language_data[i].language_name %>
                             </td>
                             <td>
                                 <%= language_data[i].read_lang %>
@@ -154,86 +201,87 @@
                                 <%= language_data[i].write_lang %>
                             </td>
                             <td>
-                                <%= language_data[i].speak %> 
+                                <%= language_data[i].speak %>
                             </td>
                         </tr>
-        
-                        <% } %>
-                </tbody>
-                </table>
-            </div>
-      </div>
 
-      <div class="card">
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-header">
-          <b>References Information </b>
+            <b>References Information </b>
         </div>
         <div class="card-body">
             <center>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Relation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(let i=0; i<reference_data.length; i++) { %>
+                <table class="table table-hover">
+                    <thead>
                         <tr>
-                            <td>
-                                <%= reference_data[i].name %>
-                            </td>
-                            <td>
-                                <%= reference_data[i].email %>
-                            </td>
-                            <td>
-                                <%= reference_data[i].relation %>
-                            </td>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Relation</th>
                         </tr>
-        
-                        <% } %>
-                </tbody>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0; i<reference_data.length; i++) { %>
+                            <tr>
+                                <td>
+                                    <%= reference_data[i].name %>
+                                </td>
+                                <td>
+                                    <%= reference_data[i].email %>
+                                </td>
+                                <td>
+                                    <%= reference_data[i].relation %>
+                                </td>
+                            </tr>
+
+                            <% } %>
+                    </tbody>
                 </table>
             </center>
-            </div>
-      </div>
-      
-      <div class="card">
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-header">
-          <b>Preferences Information </b>
+            <b>Preferences Information </b>
         </div>
         <div class="card-body">
             <center>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Preferred Locations</th>
-                        <th scope="col">Current CTC</th>
-                        <th scope="col">Expected CTC</th>
-                        <!-- <th scope="col">Notice Period</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(let i=0; i<CTC_data.length; i++) { %>
+                <table class="table table-hover">
+                    <thead>
                         <tr>
-                            <td>
-                                <%= CTC_data[i].Preferred %>
-                            </td>
-                            <td>
-                                <%= CTC_data[i].Current_CTC %>
-                            </td>
-                            <td>
-                                <%= CTC_data[i].Expected_CTC %>
-                            </td>
+                            <th scope="col">Preferred Locations</th>
+                            <th scope="col">Current CTC</th>
+                            <th scope="col">Expected CTC</th>
+                            <!-- <th scope="col">Notice Period</th> -->
                         </tr>
-        
-                        <% } %>
-                </tbody>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0; i<CTC_data.length; i++) { %>
+                            <tr>
+                                <td>
+                                    <%= CTC_data[i].Preferred %>
+                                </td>
+                                <td>
+                                    <%= CTC_data[i].Current_CTC %>
+                                </td>
+                                <td>
+                                    <%= CTC_data[i].Expected_CTC %>
+                                </td>
+                            </tr>
+
+                            <% } %>
+                    </tbody>
                 </table>
             </center>
-            </div>
-      </div>
-    
+        </div>
+    </div>
+
 </body>
+
 </html>

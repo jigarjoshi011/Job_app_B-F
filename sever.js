@@ -33,6 +33,15 @@ let Course1
 
 app.get('/all', (req, res) => {
 
+  conn.query(`select * from state_master`,(err,res)=>{
+    if(err) return console.log(err.message);
+    else{
+      State_menu=res;
+      console.log(State_menu);
+    }
+  })
+
+
   conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=1;`, (err, result) => {
     if (err) return err.message
     else {
@@ -40,12 +49,12 @@ app.get('/all', (req, res) => {
     }
   })
 
-  conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=2;`, (err, result) => {
-    if (err) return err.message
-    else {
-      State_menu = result
-    }
-  })
+  // conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=2;`, (err, result) => {
+  //   if (err) return err.message
+  //   else {
+  //     State_menu = result
+  //   }
+  // })
   conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=7`, (err, result) => {
     if (err) return err.message
     else {
@@ -82,6 +91,8 @@ app.get('/all', (req, res) => {
       res.render('firstCompo', { State_menu: State_menu, relationship_menu: relationship_menu, Course: Course1, Langauges: Langs, Tech: Tech, Dept: Dept, Loc: Loc })
     }
   })
+
+
 
 
 
@@ -251,9 +262,42 @@ function allpost() {
         })
 
 
-
-
       }
+
+      //work Exp
+      const { company, Designation_name, start_date, end_date } = req.body
+      console.log(company, Designation_name, start_date, end_date);
+
+      if (typeof (company, Designation_name, start_date, end_date) == "string") {
+        let EDdetails = `Insert into Job_application.Expirence (personal_id,company_name,Designation_name,start_date,end_date) values('${id}','${company}', '${Designation_name}',${start_date},${end_date});`
+
+        conn.query(EDdetails, (err, result) => {
+          if (err) return console.log(err.message);
+          else {
+
+            console.log(result, "Inserted Succesfully");
+          }
+
+        })
+      }
+      else {
+        for (let i = 0; i < company.length; i++) {
+          console.log(company[i], Designation_name[i], start_date[i], end_date[i]);
+          let EDdetail = `Insert into Job_application.Expirence (personal_id,company_name,Designation_name,start_date,end_date) values('${id}','${company[i]}', '${Designation_name[i]}',${start_date[i]},${end_date[i]});`
+
+          conn.query(EDdetail, (err, result) => {
+            if (err) return console.log(err.message);
+            else {
+
+              console.log(result, "Inserted Succesfully");
+            }
+
+          })
+
+        }
+      }
+
+
       res.render("insert_msg")
 
     })
@@ -261,7 +305,10 @@ function allpost() {
 
   })
 
+
 }
+
+
 allpost();
 
 
@@ -270,28 +317,28 @@ let currStr;
 app.get('/showall', (req, res) => {
 
 
-  conn.query(`SELECT * FROM personal_info order by id desc`, (err, ans) => {
+  conn.query(`SELECT * FROM personal_info where isDelete='0' order by id desc `, (err, ans) => {
     if (err) return console.log(err.message);
     res.render("showall", { ans, currStr: "" });
   })
 })
 app.post('/find', (req, res) => {
-  let currStr = req.body.search_query 
+  let currStr = req.body.search_query
   let name = "";
   let arr = ['^', '$', '&'];
- 
+
 
   console.log(currStr);
 
   var count = 0;
   for (let i = 0; i < currStr.length; i++) {
-      if (arr.includes(currStr[i])) {
-          name += " " + currStr[i];
-          count++;
-      }
-      else {
-          name += currStr[i];
-      }
+    if (arr.includes(currStr[i])) {
+      name += " " + currStr[i];
+      count++;
+    }
+    else {
+      name += currStr[i];
+    }
   }
 
 
@@ -301,51 +348,51 @@ app.post('/find', (req, res) => {
 
   let queryStr = ``;
   currname.forEach(name => {
-      if (name[0] == '^') {
-          count--;
+    if (name[0] == '^') {
+      count--;
 
-          if(count)
-          queryStr += `first_name LIKE '${name.slice(1)}%' AND `
-          else {
-              queryStr += `first_name LIKE '${name.slice(1)}%'`
-          }
+      if (count)
+        queryStr += `first_name LIKE '${name.slice(1)}%' AND `
+      else {
+        queryStr += `first_name LIKE '${name.slice(1)}%'`
       }
-    
+    }
 
 
-      if (name[0] == '$') {
-          count--
-          if(count){
-              queryStr += `last_name Like '${name.slice(1)}%' AND `
 
-          }
-          else {
-              queryStr += `last_lame Like '${name.slice(1)}%' `
-          }
-          
-      }
-     
-      if (name[0] == '&') {
-          
-          count--;
-          if(count){
-              queryStr += `city Like '${name.slice(1)}%' AND `
-          }
-          else {
-              queryStr += `city Like '${name.slice(1)}%'`
-          }
+    if (name[0] == '$') {
+      count--
+      if (count) {
+        queryStr += `last_name Like '${name.slice(1)}%' AND `
 
       }
-     
+      else {
+        queryStr += `last_lame Like '${name.slice(1)}%' `
+      }
+
+    }
+
+    if (name[0] == '&') {
+
+      count--;
+      if (count) {
+        queryStr += `city Like '${name.slice(1)}%' AND `
+      }
+      else {
+        queryStr += `city Like '${name.slice(1)}%'`
+      }
+
+    }
+
 
   })
   console.log(currStr);
 
   conn.query(`select * from personal_info where ${queryStr}`, (err, result) => {
-      if (err) return err.message
-      else {
-          res.render('showallSearch', { data: result, currStr })
-      }
+    if (err) return err.message
+    else {
+      res.render('showallSearch', { data: result, currStr })
+    }
   })
 
 
@@ -356,57 +403,130 @@ app.post('/find', (req, res) => {
 
 
 
-app.get('/dataDetails/:id',(req,res)=>{
+app.get('/dataDetails/:id', (req, res) => {
   let get_id = req.params.id;
   let personal_data, education_data, experience_data, language_data, technology_data, reference_data, CTC_data;
   let personal_query = `SELECT * FROM personal_info where id = ${get_id}`;
   conn.query(personal_query, (err, ans) => {
-      personal_data = ans;
+    personal_data = ans;
   })
   let education_query = `SELECT * FROM Academic where personal_id = ${get_id}`;
   conn.query(education_query, (err, ans) => {
-      if (err) return console.log(err.message);
-      education_data = ans;
+    if (err) return console.log(err.message);
+    education_data = ans;
 
   })
   let experience_query = `SELECT * FROM Experience where personal_id = ${get_id}`;
   conn.query(experience_query, (err, ans) => {
-      if (err) return console.log(err.message);
-      experience_data = ans;
+    if (err) return console.log(err.message);
+    experience_data = ans;
 
   })
   let language_query = `SELECT * FROM Languages_Known where personal_id = ${get_id}`;
   conn.query(language_query, (err, ans) => {
-      if (err) return console.log(err.message);
-      language_data = ans;
+    if (err) return console.log(err.message);
+    language_data = ans;
 
   })
   let technology_query = `SELECT * FROM Technologies where personal_id = ${get_id}`;
   conn.query(technology_query, (err, ans) => {
-      if (err) return console.log(err.message);
-      technology_data = ans;
+    if (err) return console.log(err.message);
+    technology_data = ans;
 
   })
 
   let reference_query = `SELECT * FROM Reference_Tab where personal_id = ${get_id}`;
   conn.query(reference_query, (err, ans) => {
-      if (err) return console.log(err.message);
-      reference_data = ans;
+    if (err) return console.log(err.message);
+    reference_data = ans;
   })
 
   let preference_query = `SELECT * FROM CTC where personal_id = ${get_id}`;
   conn.query(preference_query, (err, ans) => {
-      if (err) return console.log(err.message);
-      CTC_data = ans;
-      res.render("dataDetails", { personal_data, education_data, experience_data, language_data, technology_data, reference_data, CTC_data });
+    if (err) return console.log(err.message);
+    CTC_data = ans;
+    res.render("dataDetails", { personal_data, education_data, experience_data, language_data, technology_data, reference_data, CTC_data });
 
+  })
+})
+
+var cities;
+app.get('/all/state/:id',(req,res)=>{
+  let id = req.params.id;
+  cities_query =`select * from city_master where state_id=${id}`
+  conn.query(cities_query,(err,result)=>{
+    if(err) console.log(err.message); 
+    return res.json({result})
+  })
+})
+app.get('/all/delete/:id',(req,res)=>{
+  let id = req.params.id;
+  delete_query =`update personal_info set isDelete='1' where id=${id}`
+  conn.query(delete_query,(err,result)=>{
+    if(err) console.log(err.message); 
+  })
+  return res.json({message: "got ans"})
+})
+app.get('/all/deleteall/:id',(req,res)=>{
+  let id = req.params.id;
+  var s_id=id.split(",")
+  // console.log(s_id);
+  // console.log(id);
+  // console.log(id);
+
+  for(let i = 0 ; i<s_id.length;i++){
+    // console.log(s_id[i]);
+    let muldelete_query =`update personal_info set isDelete='1' where id=${s_id[i]}`
+    conn.query(muldelete_query,(err,result)=>{
+      if(err) console.log(err.message);
+    })
+  }
+  // return res.json({result})
+})
+
+
+
+app.get('/all/archive',(req,res)=>{
+
+
+    let archdelete_query =`select * from personal_info where isDelete='1'`
+    conn.query(archdelete_query,(err,result)=>{
+      if(err) console.log(err.message);
+      let arch= result
+      res.render("archive",{ans:arch})
+    })
+
+})
+
+
+app.get('/all/restore/:id',(req,res)=>{
+  let id = req.params.id;
+  delete_query =`update personal_info set isDelete='0' where id=${id}`
+  conn.query(delete_query,(err,result)=>{
+    if(err) console.log(err.message); 
+    var ans = result
+    return res.json({message: ans})
   })
 })
 
 
 
+app.get('/all/restoreall/:id',(req,res)=>{
+  let id = req.params.id;
+  var s_id=id.split(",")
+  // console.log(s_id);
+  // console.log(id);
+  // console.log(id);
 
-
+  for(let i = 0 ; i<s_id.length;i++){
+    // console.log(s_id[i]);
+    let muldelete_query =`update personal_info set isDelete='0' where id=${s_id[i]}`
+    conn.query(muldelete_query,(err,result)=>{
+      if(err) console.log(err.message);
+    })
+  }
+  // return res.json({result})
+})
 
 
 app.listen(PORT, console.log(`Server start on port ${PORT}`));

@@ -103,14 +103,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 20px;
+    /* margin: 20px; */
     text-align: center;
 }
 .Work{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20px;
+    /* margin: 20px; */
     text-align: center;
 }
 
@@ -191,6 +191,10 @@
 }
 
 .field8 div{
+    margin: 30px;
+}
+
+#field8{
     margin: 30px;
 }
 

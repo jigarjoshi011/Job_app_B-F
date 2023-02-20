@@ -18,10 +18,10 @@
             margin: 20px;
             display: block;
             border-radius: 10px;
-            
+
         }
 
-        .submit :hover{
+        .submit :hover {
             cursor: pointer;
             background-color: #1d931d;
         }
@@ -79,7 +79,10 @@
 
                         <div>
                             <label>City:</label>
-                            <input type="text" name="City" id="City">
+                            <select name="City" id="City">
+                                <option value="Select City" selected disabled>Select City</option>
+
+                            </select>
                         </div>
 
                     </div>
@@ -125,10 +128,11 @@
 
                         <div>
                             <label>State:</label>
-                            <select name="State" id="State">
+                            <select name="State" id="State" onchange="selectCity(this)">
+                                <option value="default" selected disabled>Select State</option>
                                 <% for(var i=0 ; i< State_menu.length;i++){ %>
-                                    <option value="<%= State_menu[i].option_value %>">
-                                        <%= State_menu[i].option_value %>
+                                    <option value="<%= State_menu[i].state_name %>">
+                                        <%= State_menu[i].state_name %>
                                     </option>
                                     <% } %>
                             </select>
@@ -179,6 +183,37 @@
                         <input class="btn1" type="button" value="Add Education" id="addEdu">
                     </div>
                 </fieldset>
+                <fieldset class="bd2">
+                    <legend class="l2">Work Experience</legend>
+                    <div class="field8" id="field8">
+
+                        <div class="Work">
+                            <div>
+                                <label>Name of company</label>
+                                <input type="text" name="company" id="company">
+                            </div>
+                            <div>
+                                <label>Designation</label>
+                                <input type="text" name="Designation_name" id="Designation">
+                            </div>
+                            <div>
+                                <label>From</label>
+                                <input type="date" name="start_date" id="start_date">
+                            </div>
+                            <div>
+                                <label>To</label>
+                                <input type="date" name="end_date" id="end_date">
+                            </div>
+                        </div><br><br>
+
+
+                    </div>
+                    <div>
+                        <input class="btn1" type="button" value="Add Experience" id="addExp">
+                    </div>
+                </fieldset>
+
+
 
                 <div class="bd3">
                     <!-- <legend>hello</legend> -->
@@ -312,7 +347,7 @@
                         <label> Prefered Location</label> &nbsp;
                         <select multiple name="loc_name">
                             <% for(var i=0 ; i< Loc.length;i++){ %>
-                                <option  value="<%= Loc[i].option_value %>">
+                                <option value="<%= Loc[i].option_value %>">
                                     <%= Loc[i].option_value %>
                                 </option>
                                 <% } %>
@@ -329,7 +364,7 @@
 
 
 
-                 
+
 
             <div class="submit"><input type="submit" value="Submit"></div>
 
@@ -367,8 +402,47 @@
 </div>`)
     })
 
+    document.getElementById('addExp').addEventListener('click', () => {
+        document.getElementById('field8').insertAdjacentHTML('beforeend', `<div class="Work">
+    <div>
+        <label>Name of company</label>
+        <input type="text" name="company" id="company">
+    </div>
+    <div>
+        <label>Designation</label>
+        <input type="text" name="Designation_name" id="Designation">
+    </div>
+    <div>
+        <label>From</label>
+        <input type="date" name="start_date" id="start_date">
+    </div>
+    <div>
+        <label>To</label>
+        <input type="date" name="end_date" id="end_date">
+    </div>
+</div><br><br>`)
+    })
 
+   var City= document.getElementById("City")
 
+    async function selectCity(ele) {
+        state_id = ele.value
+        console.log(state_id);
+        console.log("selecyt cities");
+        try {
+            const selected_State = await fetch(`http://localhost:5005/all/state/${state_id}`);
+            var cities = await selected_State.json();
+            console.log(cities);
+            City.innerHTML='';
+            // City.innerHTML+=`<option>Select City</option>`
+            cities.result.forEach(option=>{
+                City.innerHTML+=`<option id=${option.city_id}>${option.city_name}</option>`
+            })
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 
 

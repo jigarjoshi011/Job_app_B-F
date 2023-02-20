@@ -44,25 +44,8 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
         text-align: center;
         border: 3px solid black;
     }
-
-    .header {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 30px;
-        margin-top: 30px;
-
-    }
-
-    #deletehandle {
-        background-color: rgb(78, 78, 78);
-        color: aliceblue;
-        font-size: x-large;
-        border-radius: 10px;
-        padding: 10px;
-
-    }
-
     #Deleted_recs {
+        margin: 30px;
         background-color: rgb(79, 79, 79);
         color: aliceblue;
         font-size: x-large;
@@ -70,36 +53,33 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
         padding: 10px;
 
     }
-    .formsss{
+    #deletehandle{
+        margin: 30px;
+        background-color: rgb(79, 79, 79);
+        color: aliceblue;
+        font-size: x-large;
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .faor{
         display: flex;
         justify-content: center;
-      
-    }
-    .he{
-        text-align: center;
     }
 </style>
 
 <body>
-    <h1 class="he">Welcome to Admin Database</h1>
-    <div class="formsss">
-        <form action="/find" method="post">
-            <input type="text" value="<%= currStr %>" name="search_query">
-            <input type="submit" value="Search">
-        </form>
-
-    </div>
+    <h1 class="he">Welcome to Archive Database</h1>
 
 
 
 
     <table class="table table-hover">
         <tbody>
-            <div class="header">
-                <a id="Deleted_recs" href="/all/archive">Deleted Records</a>
-                <a id="deletehandle" href="">Delete Selected</a>
-            </div>
+            <div class="faor" >
 
+                <a id="Deleted_recs" href="/showall">ShowAll</a>
+                <a id="deletehandle" href="">Restore All</a>
+            </div>
             <tr>
                 <th>Application ID</th>
                 <th>Application Date</th>
@@ -109,9 +89,9 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
                 <th>Address</th>
                 <th>Email</th>
                 <th>Gender</th>
-                <th>View Details</th>
-                <th>Delete</th>
+                <th>Restore</th>
                 <th>Action</th>
+                
 
             </tr>
 
@@ -139,14 +119,10 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
                     <td>
                         <%= ans[i].gender %>
                     </td>
-                    <td><a href="/dataDetails/<%= ans[i].id %>">view<i class="bi bi-eye-fill"></i></a></td>
-                    </td>
                     <td><span><i id="<%= ans[i].id %>" class="bi bi-eye-fill"
-                                onclick="handleDelete(this)">Delete</i></span></td>
-                    <td><i class="bi bi-eye-fill">
+                        onclick="handleRestore(this)">Restore</i></span></td>
+                        <td><i class="bi bi-eye-fill">
                             <input class="DeleteAll" type="checkbox" name="delete_check" id="<%= ans[i].id %>">
-
-                        </i></a></td>
                 </tr>
                 <% } %>
 
@@ -155,12 +131,12 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
     </table>
 </body>
 <script>
-    async function handleDelete(eve) {
+    async function handleRestore(eve) {
         var id = eve.id
-        var response = confirm("Are you sure to delete?");
+        var response = confirm("Are you sure to restore?");
 
         if (response) {
-            const ans = await fetch(`http://localhost:5005/all/delete/${id}`)
+            const ans = await fetch(`http://localhost:5005/all/restore/${id}`)
             const data = await ans.json();
       
             if (data) {
@@ -172,8 +148,6 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
 
         }
     }
-
-
     const delete_click = document.getElementById('deletehandle')
     delete_click.addEventListener('click', async () => {
         const checkbox = document.querySelectorAll(".DeleteAll")
@@ -197,7 +171,7 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
 
         if (alert_result == true) {
             console.log("i am here");
-            const response = await fetch(`http://localhost:5005/all/deleteall/${ids}`);
+            const response = await fetch(`http://localhost:5005/all/restoreall/${ids}`);
             var res = await response.json()
         }
 
@@ -214,9 +188,9 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
         }
 
     })
-
-
-
-</script>
+    
+    
+    
+    </script>
 
 </html>
