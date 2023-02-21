@@ -314,12 +314,55 @@ allpost();
 
 let currStr;
 
-app.get('/showall', (req, res) => {
 
+app.get('/showall', (req, res) => {
 
   conn.query(`SELECT * FROM personal_info where isDelete='0' order by id desc `, (err, ans) => {
     if (err) return console.log(err.message);
+   
     res.render("showall", { ans, currStr: "" });
+  })
+})
+
+let allrecords = 0;
+let limit = 3
+var offset = 0;
+
+app.get('/showall/list', (req, res) => {
+
+  conn.query(`select count(*) as total_rec from personal_info`, (err, result1) => {
+
+    allrecords = result1[0].total_rec
+
+})
+  let page = req.query.page || 1;
+  offset = (page - 1) * limit;
+
+  conn.query(`SELECT * FROM personal_info where isDelete='0' order by id desc limit ${offset}, ${limit}`, (err, ans) => {
+    if (err) return console.log(err.message);
+    allrecords = Math.ceil(allrecords / limit)+1;
+    res.json({page:page,data:ans})
+    // res.render("things", { ans, currStr: "" ,allrecords});
+  })
+})
+
+
+app.get('/showall/things', (req, res) => {
+
+  conn.query(`select count(*) as total_rec from personal_info`, (err, result1) => {
+
+    allrecords = result1[0].total_rec
+
+})
+  let page = req.query.page || 1;
+  offset = (page - 1) * limit;
+
+  conn.query(`SELECT * FROM personal_info where isDelete='0' order by id desc limit ${offset}, ${limit}`, (err, ans) => {
+    if (err) return console.log(err.message);
+    allrecords = Math.ceil(allrecords / limit);
+    // res.json({page:allrecords,data:ans})
+    // console.log(allrecords);
+    res.render("things", { ans, currStr: "" ,allrecords});
   })
 })
 app.post('/find', (req, res) => {

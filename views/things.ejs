@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>display</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    /* @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css'); */
+
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 20px;
+    }
+
+    i:hover {
+        cursor: pointer;
+    }
+
+    table {
+        border: 3px solid rgb(0, 82, 106);
+        width: 100%;
+        height: 100%;
+    }
+
+    tr {
+        background-color: rgb(203, 248, 255);
+    }
+
+    th {
+        background-color: rgb(249, 171, 171);
+    }
+
+    td,
+    th {
+        text-align: center;
+        border: 3px solid black;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+        margin-top: 30px;
+
+    }
+
+    #deletehandle {
+        background-color: rgb(78, 78, 78);
+        color: aliceblue;
+        font-size: x-large;
+        border-radius: 10px;
+        padding: 10px;
+
+    }
+
+    #Deleted_recs {
+        background-color: rgb(79, 79, 79);
+        color: aliceblue;
+        font-size: x-large;
+        border-radius: 10px;
+        padding: 10px;
+
+    }
+
+    .formsss {
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .he {
+        text-align: center;
+    }
+    nav{
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+    }
+    .pagination, .page-link {
+        display: flex;
+        padding: 5px;
+        border: 2px solid #fff;
+        justify-content: center;
+        background-color: rgb(49, 0, 95);
+        color: #fff;
+        font-size: large;
+        cursor: pointer;
+        border-radius: 10px;
+        
+    }
+    .pageitem{
+        display: flex;
+        flex-direction: column;
+    }
+    .loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color:#de3500 #0000 #fff #0000;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: 1s rotate linear infinite;
+ }
+ .loader:before , .loader:after{
+    content: '';
+    top: 0;
+    left: 0;
+    position: absolute;
+    border: 10px solid transparent;
+    border-bottom-color:#fff;
+    transform: translate(-10px, 19px) rotate(-35deg);
+  }
+ .loader:after {
+    border-color: #de3500 #0000 #0000 #0000 ;
+    transform: translate(32px, 3px) rotate(-35deg);
+  }
+   @keyframes rotate {
+    100%{    transform: rotate(360deg)}
+  }
+
+ 
+</style>
+
+<body>
+
+    <table class="table table-hover">
+        <div class="header">
+            <a id="Deleted_recs" href="/all/archive">Deleted Records</a>
+            <a id="deletehandle" href="">Delete Selected</a>
+        </div>
+        <span id="loader" class="loader"></span>
+        <tr>
+            <th>Application ID</th>
+            <th>Application Date</th>
+            <th>First Name</th>
+
+            <th>Contact Number</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <!-- <th>View Details</th>
+            <th>Delete</th>
+            <th>Action</th> -->
+
+
+        </tr>
+        <tbody id="tboady_name">
+
+         
+
+            <% for(let i=0; i<ans.length; i++) { %>
+                <tr id="trow" class="mytable">
+                    <th scope="row">
+                        <%= ans[i].id %>
+                    </th>
+                    <td>
+                        <%= ans[i].created_at.toString().substring(0, 25) %>
+                    </td>
+                    <td>
+                        <%= ans[i].first_name %>
+                            <%= ans[i].last_name %>
+                    </td>
+                    <td>
+                        <%= ans[i].contact_no %>
+                    </td>
+                    <td>
+                        <%= ans[i].address.substring(0, 30) %>...
+                    </td>
+                    <td>
+                        <%= ans[i].email %>
+                    </td>
+                    <td>
+                        <%= ans[i].gender %>
+                    </td>
+                  
+                </tr>
+                <% } %>
+
+
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <% 
+                for(let i=1 ; i<allrecords;i++) {%>
+                <ul id="r<%= i  %>" class="pageitem">
+                    <span class="page-link" onclick="handlepagination(this)"
+                        id="<%= i %>">
+                        <%=i %>
+                    </span>
+                </ul>
+                <% } %>
+        </ul>
+    </nav>
+</body>
+<script>
+    async function handlepagination(eve) {
+
+        document.getElementById('loader').style.display="visible"
+
+
+       setTimeout(async() => {
+        
+        
+        document.getElementById('loader').style.display="none"
+        var page_no = eve.id;
+        console.log(page_no);
+        const response = await fetch(`http://localhost:5005/showall/list/?page=${page_no}`);
+        const result = await response.json();
+        console.log(result);
+        tboady_name.innerHTML =""
+        result.data.forEach(element => {
+            tboady_name.innerHTML +=
+            `
+                <tr>
+                <th> ${element.id} </th>
+                <td>
+                ${element.first_name}
+                </td>
+                <td>
+                ${element.last_name
+                }
+                </td>
+                <td>
+                ${element.email}
+                </td>
+                <td>
+                ${element.contact_no}
+                </td>
+                <td>
+                ${element.city}
+                </td>
+                <td>
+                ${element.address}
+                </td>
+                </tr>`
+            });
+        }, 2000);
+        
+        document.getElementById('loader').style.display="visible"
+
+      
+    }
+
+
+
+</script>
+
+</html>
