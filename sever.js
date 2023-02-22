@@ -325,7 +325,7 @@ app.get('/showall', (req, res) => {
 })
 
 let allrecords = 0;
-let limit = 3
+let limit = 5
 var offset = 0;
 
 app.get('/showall/list', (req, res) => {

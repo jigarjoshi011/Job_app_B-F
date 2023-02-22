@@ -125,7 +125,19 @@
     100%{    transform: rotate(360deg)}
   }
 
- 
+  .overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
 </style>
 
 <body>
@@ -135,7 +147,10 @@
             <a id="Deleted_recs" href="/all/archive">Deleted Records</a>
             <a id="deletehandle" href="">Delete Selected</a>
         </div>
-        <span id="loader" class="loader"></span>
+        <div class="overlay">
+            <span id="loader" class="loader"></span>
+        </div>
+
         <tr>
             <th>Application ID</th>
             <th>Application Date</th>
@@ -152,8 +167,6 @@
 
         </tr>
         <tbody id="tboady_name">
-
-         
 
             <% for(let i=0; i<ans.length; i++) { %>
                 <tr id="trow" class="mytable">
@@ -196,6 +209,7 @@
                         <%=i %>
                     </span>
                 </ul>
+                
                 <% } %>
         </ul>
     </nav>
@@ -203,16 +217,15 @@
 <script>
     async function handlepagination(eve) {
 
-        document.getElementById('loader').style.display="visible"
 
 
-       setTimeout(async() => {
-        
-        
-        document.getElementById('loader').style.display="none"
+        // let overlay = document.getElementsByClassName('overlay')
+
         var page_no = eve.id;
         console.log(page_no);
+        // overlay.style.display = 'flex'
         const response = await fetch(`http://localhost:5005/showall/list/?page=${page_no}`);
+        // overlay.style.display = 'none'
         const result = await response.json();
         console.log(result);
         tboady_name.innerHTML =""
@@ -242,9 +255,7 @@
                 </td>
                 </tr>`
             });
-        }, 2000);
         
-        document.getElementById('loader').style.display="visible"
 
       
     }
