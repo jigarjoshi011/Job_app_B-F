@@ -92,15 +92,6 @@ app.get('/all', (req, res) => {
     }
   })
 
-
-
-
-
-
-
-
-
-
 })
 
 function allpost() {
@@ -315,6 +306,8 @@ allpost();
 let currStr;
 
 
+//ALL RECORDS
+
 app.get('/showall', (req, res) => {
 
   conn.query(`SELECT * FROM personal_info where isDelete='0' order by id desc `, (err, ans) => {
@@ -328,6 +321,9 @@ let allrecords = 0;
 let limit = 5
 var offset = 0;
 
+
+
+//PAGINATION
 app.get('/showall/list', (req, res) => {
 
   conn.query(`select count(*) as total_rec from personal_info`, (err, result1) => {
@@ -365,6 +361,9 @@ app.get('/showall/things', (req, res) => {
     res.render("things", { ans, currStr: "" ,allrecords});
   })
 })
+
+
+//SEARCHING RECORDS
 app.post('/find', (req, res) => {
   let currStr = req.body.search_query
   let name = "";
@@ -573,3 +572,108 @@ app.get('/all/restoreall/:id',(req,res)=>{
 
 
 app.listen(PORT, console.log(`Server start on port ${PORT}`));
+
+
+//EDITING FORM
+
+
+app.get('/edit/:id',(req,res)=>{
+  let get_id = req.params.id;
+  let personal_data, education_data, experience_data, language_data, technology_data, reference_data, CTC_data;
+  let personal_query = `SELECT * FROM personal_info where id = ${get_id}`;
+  conn.query(personal_query, (err, ans) => {
+    personal_data = ans;
+    // console.log((personal_data[0].dob).toString())
+    // console.log(personal_data[0].zipcode);
+  })
+  conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=1;`, (err, result) => {
+    if (err) return err.message
+    else {
+      relationship_menu = result
+      // console.log(Course1);
+    }
+  })
+
+  conn.query(`select * from state_master`,(err,res)=>{
+    if(err) return console.log(err.message);
+    else{
+      State_menu=res;
+      // console.log(State_menu);
+    }
+  })
+  conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=7`, (err, result) => {
+    if (err) return err.message
+    else {
+      Course1 = result
+      // console.log(Course1);
+    }
+  })
+  let education_query = `SELECT * FROM Academic where personal_id = ${get_id}`;
+  conn.query(education_query, (err, ans) => {
+    if (err) return console.log(err.message);
+    education_data = ans;
+    // console.log(education_data);
+
+  })
+  let experience_query = `SELECT * FROM Experience where personal_id = ${get_id}`;
+  conn.query(experience_query, (err, ans) => {
+    if (err) return console.log(err.message);
+    experience_data = ans;
+
+  })
+  conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=3;`, (err, result) => {
+    if (err) return err.message
+    else {
+      Langs = result
+      console.log(Langs);
+    }
+  })
+  let language_query = `SELECT * FROM Languages_Known where personal_id = ${get_id}`;
+  conn.query(language_query, (err, ans) => {
+    if (err) return console.log(err.message);
+    language_data = ans;
+    console.log(language_data);
+
+  })
+  conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=4;`, (err, result) => {
+    if (err) return err.message
+    else {
+      Tech = result
+      // console.log(Tech);
+    }
+  })
+  let technology_query = `SELECT * FROM Technologies where personal_id = ${get_id}`;
+  conn.query(technology_query, (err, ans) => {
+    if (err) return console.log(err.message);
+    technology_data = ans;
+    // console.log(technology_data);
+
+  })
+
+  let reference_query = `SELECT * FROM Reference_Tab where personal_id = ${get_id}`;
+  conn.query(reference_query, (err, ans) => {
+    if (err) return console.log(err.message);
+    reference_data = ans;
+  })
+
+  let preference_query = `SELECT * FROM CTC where personal_id = ${get_id}`;
+  conn.query(preference_query, (err, ans) => {
+    if (err) return console.log(err.message);
+    CTC_data = ans;
+    res.render("edit", { personal_data, education_data, experience_data,Langauges:Langs,Tech, language_data, technology_data, reference_data, CTC_data ,relationship_menu,State_menu,Course1});
+
+  })
+
+
+
+
+})
+
+
+
+//updating query ...
+
+
+app.post('/update/:id',(req,res)=>{
+
+})

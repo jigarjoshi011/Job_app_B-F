@@ -131,7 +131,7 @@
                             <select name="State" id="State" onchange="selectCity(this)">
                                 <option value="default" selected disabled>Select State</option>
                                 <% for(var i=0 ; i< State_menu.length;i++){ %>
-                                    <option value="<%= State_menu[i].state_name %>">
+                                    <option value="<%= State_menu[i].state_id %>">
                                         <%= State_menu[i].state_name %>
                                     </option>
                                     <% } %>
@@ -261,7 +261,7 @@
                                         </label><br>
 
                                         <input type="radio" id="Bignner" name="<%= Tech[i].option_value%>a"
-                                            value="Bignner">
+                                            value="Bignner" >
                                         <label for="Bignner"> Bignner</label><br>
                                         <input type="radio" id="intermediate" name="<%= Tech[i].option_value%>a"
                                             value="Intermediate">
@@ -444,6 +444,21 @@
         }
     }
 
+
+// function dropChange(element){
+//     var state_id = element.value;
+//     console.log(state_id);
+//     fetch(`http://localhost:5005/all/state/${state_id}`)
+//     .then(resp => resp.json())
+//     .then(data =>{
+//      console.log(data)
+//     city.innerHTML = ""
+//     data.ans.forEach(d => {
+//         city.innerHTML += `<option value=${d.name_city}>${d.city_name}</option>`
+//     })}
+    
+//     );
+// }
 
 
     function updateParent(language) {

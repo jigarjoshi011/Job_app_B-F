@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job application</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .submit input {
+            width: 220px;
+            height: 7vh;
+            background-color: #008000;
+            color: black;
+            font-weight: 900;
+            font-size: x-large;
+            margin: 20px;
+            display: block;
+            border-radius: 10px;
+
+        }
+
+        .submit :hover {
+            cursor: pointer;
+            background-color: #1d931d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="registation">
+        <form class="main" action="/all" method="post">
+            <h1 class="title">Update Job Application Form</h1>
+            <div class="basic">
+
+
+                <fieldset class="bd1">
+                    <legend class="l1">Baisc Details
+                    </legend>
+                    <div class="fields1">
+                        <div>
+                            <label>First Name:</label>
+                            <input type="text" name="fname" id="FirstName" value="<%= personal_data[0].first_name%>">
+                        </div>
+
+                        <div><label>Last Name:</label>
+                            <input type="text" name="lname" id="LastName" value="<%= personal_data[0].last_name %>">
+                        </div>
+
+
+
+                    </div>
+                    <div class="field2">
+                        <div><label>Designation:</label>
+                            <input type="text" name="Designation" id="Designation"
+                                value="<%= personal_data[0].designation %>">
+                        </div>
+                        <div>
+                            <label>Address-1:</label>
+                            <input type="text" name="Address" id="Address-1" value="<%= personal_data[0].address %>">
+                        </div>
+
+                    </div>
+                    <div class="field3">
+                        <div>
+                            <label>Email:</label>
+                            <input type="text" name="Email" id="email" value="<%= personal_data[0].email %>">
+                        </div>
+
+                        <div>
+                            <label>Address-2:</label>
+                            <input type="text" name="pAddress" id="Address-2" value="<%= personal_data[0].address_2 %>">
+                        </div>
+
+                    </div>
+                    <div class="field4">
+                        <div>
+                            <label>Phone Number:</label>
+                            <input type="number" name="phnumber" id="Phone_Number"
+                                value="<%= personal_data[0].contact_no %>">
+                        </div>
+
+                        <div>
+                            <label>City:</label>
+                            <select name="City" id="City">
+                                <option value="Select City" selected disabled>
+                                    <%= personal_data[0].city %>
+                                </option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="field5">
+                        <div>
+                            <label>Zip-code:</label>
+                            <input type="text" name="Zipcode" id="Zip-code" value="<%= personal_data[0].zipcode %>">
+                        </div>
+
+
+
+                        <div>
+                            <label>Gender:</label>
+                            <input class="l-legend" type="radio" id="gChoice1" name="gender" <% if(
+                                personal_data[0].gender=='M' ){ %> checked <% } %> />
+                                <label size="20px" for="gChoice1">Male</label>
+
+                                <input class="l-legend" type="radio" id="gChoice2" name="gender" <% if(
+                                    personal_data[0].gender=='F' ){ %> checked <% } %> />
+                                    <label for="gChoice2">Female</label>
+
+                                    <input class="l-legend" type="radio" id="gChoice3" name="gender" <% if(
+                                        personal_data[0].gender=='O' ){ %> checked <% } %>/>
+                                        <label for="gChoice3">Other </label>
+                        </div>
+
+                    </div>
+                    <div class="field6">
+                        <div><label for="Relationship">Relationship Status:</label>
+
+                            <select name="Relationship" id="Relationship">
+                                <% for(var i=0 ; i< relationship_menu.length;i++){ %>
+                                    <option value="<%= relationship_menu[i].option_value %>">
+                                        <%= personal_data[0].relationship %>
+                                    </option>
+                                    <% } %>
+                            </select>
+
+                        </div>
+
+                        <div>
+                            <label>State:</label>
+                            <select name="State" id="State" onchange="selectCity(this)">
+                                <option value="default" selected disabled>
+                                    <%= personal_data[0].state %>
+                                </option>
+                                <% for(var i=0 ; i< State_menu.length;i++){ %>
+                                    <option value="<%= State_menu[i].state_id %>">
+                                        <%= State_menu[i].state_name %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+                        <div>
+
+                            <label for="birthday">Date of Birth:</label>
+                            <input type="date" id="dob" name="dob" value="<%= personal_data[0].dob %>">
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="bd2">
+                    <legend class="l2">Education Detail</legend>
+                    <div class="field7" id="field7">
+                        <% for (let i=0; i < education_data.length; i++) {%>
+
+
+
+                            <div class="edu">
+                                <div>
+                                    <label>Name of Course</label>
+                                    <select class="cc" name="Course" id="Course">
+                                        <% for(var j=0 ; j< Course1.length;j++){ %>
+                                            <option value=" <%=education_data[i].course  %>">
+                                                <%=Course1[j].option_value %>
+                                            </option>
+                                            <% } %>
+                                    </select>
+
+
+
+                                </div>
+
+                                <div>
+                                    <label>Board/University</label>
+                                    <input type="text" name="institution" id="institution"
+                                        value="<%= education_data[i].board %>">
+                                </div>
+                                <div>
+                                    <label>Percentage Obtained</label>
+                                    <input type="text" name="Percentage" id="Percentage"
+                                        value="<%= education_data[i].percentage %>">
+                                </div>
+                                <div>
+                                    <label>Passing Year</label>
+                                    <input type="text" name="Passing_Year" id="Passing_Year"
+                                        value="<%= education_data[i].passing_year %>">
+                                </div>
+                            </div>
+                            <% } %><br><br>
+
+
+                    </div>
+
+
+                    <div>
+                        <input class="btn1" type="button" value="Add Education" id="addEdu">
+                    </div>
+                </fieldset>
+                <div class="bd3">
+                
+                    <div class="parent">
+                        <fieldset class="lk">
+                            <legend class="l3">Langauges Known</legend>
+                            <div id="lang_info">
+                            
+                                <% for (let i=0; i < Langauges.length; i++) { %>
+                                    <div id="lang_cols" class="lk1">
+                                        <label for="<%= Langauges[i].option_value  %>">
+                                            <%= Langauges[i].option_value %>
+                                        </label>
+                                        <input type="checkbox" id=" <%= Langauges[i].option_value %>_parent"
+                                            name="<%= Langauges[i].option_value %>"  
+                                            value="<%= Langauges[i].option_value %>" onclick="selectAll(this)" <% if(language_data[i]?.language_name == 'Hindi'|| 'Gujarati' || 'English'||'French' ) { %> checked <% } %> >
+                                        <label for="read"> read</label><br>
+                                        <input type="checkbox" id="<%= Langauges[i].option_value %>"
+                                            name="<%=  Langauges[i].option_value %>r" value="10"
+                                            onclick="updateParent(this)" <% if(language_data[i]?.read_lang ==10) { %> checked <% } %>>
+                                        <label for="write"> write</label><br>
+                                        <input type="checkbox" id="<%= Langauges[i].option_value %>"
+                                            name="<%=  Langauges[i].option_value %>w" value="10"
+                                            onclick="updateParent(this)" <% if(language_data[i]?.write_lang ==10) { %> checked <% } %>>
+                                        <label for="speak"> speak</label><br>
+                                        <input type="checkbox" id="<%= Langauges[i].option_value %>"
+                                            name="<%=  Langauges[i].option_value %>s" value="10"
+                                            onclick="updateParent(this)" <% if(language_data[i]?.speak ==10) { %> checked <% } %>>
+                                    </div>
+                                    <% } %> 
+                            </div>
+
+                        </fieldset>
+                    </div>
+                    <div class="child">
+
+                        <fieldset class="tk">
+                            <legend class="l3">Technologies Known</legend>
+                            <div id="Tech_info">
+                                <% for (let i=0; i < Tech.length; i++) { %>
+                                    <div class="tk1">
+                                        <input type="checkbox" id="<%= Tech[i].option_value  %>"
+                                            name="<%= Tech[i].option_value %>" value="<%= Tech[i].option_value  %>" <% if (technology_data[i].technology){  %> checked <%   } %>>
+                                        <label for="<%= Tech[i].option_value  %>">
+                                            <%= Tech[i].option_value %>
+                                        </label><br>
+
+                                        <input type="radio" id="Bignner" name="<%= Tech[i].option_value%>a"
+                                            value="Bignner"  <% if(technology_data[i]?.profiency) { %> checked <% } %> >
+                                        <label for="Bignner"> Bignner</label><br>
+                                        <input type="radio" id="intermediate" name="<%= Tech[i].option_value%>a"
+                                            value="Intermediate" <% if(technology_data[i]?.profiency) { %> checked <% } %> >
+                                        <label for="intermediate"> intermediate</label><br>
+                                        <input type="radio" id="Expert" name="<%= Tech[i].option_value%>a"
+                                            value="Expert" <% if(technology_data[i]?.profiency) { %> checked <% } %>>
+                                        <label for="Expert"> Expert</label><br>
+
+                                    </div>
+                                    <% } %>
+
+                            </div>
+
+                        </fieldset>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+           
+
+
+
+
+
+            <div class="submit"><input type="submit" value="Update"></div>
+
+
+        </form>
+    </div>
+
+
+</body>.
+<script>
+
+    document.getElementById("addEdu").addEventListener('click', () => {
+        document.getElementById('field7').insertAdjacentHTML('beforeend', ` <div class="edu">
+        <div>
+            <label>Name of Course</label>
+            <select class="cc" name="Course" id="Course">
+                                 
+                                    </select>
+        </div>
+        <div>
+            <label>Board/University</label>
+            <input type="text" name="institution" id="institution">
+        </div>
+        <div>
+            <label>Percentage Obtained</label>
+            <input type="text" name="Percentage" id="Percentage">
+        </div>
+        <div>
+            <label>Passing Year</label>
+            <input type="text" name="Passing_Year" id="Passing_Year">
+        </div><br><br><br>
+    </div>`)
+    })
+
+    //     document.getElementById('addExp').addEventListener('click', () => {
+    //         document.getElementById('field8').insertAdjacentHTML('beforeend', `<div class="Work">
+    //     <div>
+    //         <label>Name of company</label>
+    //         <input type="text" name="company" id="company">
+    //     </div>
+    //     <div>
+    //         <label>Designation</label>
+    //         <input type="text" name="Designation_name" id="Designation">
+    //     </div>
+    //     <div>
+    //         <label>From</label>
+    //         <input type="date" name="start_date" id="start_date">
+    //     </div>
+    //     <div>
+    //         <label>To</label>
+    //         <input type="date" name="end_date" id="end_date">
+    //     </div>
+    // </div><br><br>`)
+    //     })
+
+
+
+
+
+
+
+    var City = document.getElementById("City")
+
+    async function selectCity(ele) {
+        state_id = ele.value
+        console.log(state_id);
+        console.log("selecyt cities");
+        try {
+            const selected_State = await fetch(`http://localhost:5005/all/state/${state_id}`);
+            var cities = await selected_State.json();
+            console.log(cities);
+            City.innerHTML = '';
+            // City.innerHTML+=`<option>Select City</option>`
+            cities.result.forEach(option => {
+                City.innerHTML += `<option id=${option.city_id}>${option.city_name}</option>`
+            })
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+
+    function updateParent(language) {
+        const languageClass = language.id;
+        console.log(languageClass);
+        let ans = true;
+        const parentElement = document.querySelector(`#${languageClass}_parent`);
+        parentElement.checked = true;
+
+
+    }
+
+    function selectAll(language) {
+        console.log(language.name);
+        if (!language.checked) {
+            document.querySelectorAll(`#${language.name}`).forEach((lan) => {
+                lan.checked = false;
+            })
+        }
+    }
+</script>
+
+</html>

@@ -110,6 +110,7 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
                 <th>Email</th>
                 <th>Gender</th>
                 <th>View Details</th>
+                <th>Edit Details</th>
                 <th>Delete</th>
                 <th>Action</th>
 
@@ -141,6 +142,7 @@ integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6
                     </td>
                     <td><a href="/dataDetails/<%= ans[i].id %>">view<i class="bi bi-eye-fill"></i></a></td>
                     </td>
+                    <td><a href="/edit/<%= ans[i].id %>">edit<i class="bi bi-eye-fill"></i></a></td>
                     <td><span><i id="<%= ans[i].id %>" class="bi bi-eye-fill"
                                 onclick="handleDelete(this)">Delete</i></span></td>
                     <td><i class="bi bi-eye-fill">
