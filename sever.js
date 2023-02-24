@@ -33,10 +33,10 @@ let Course1
 
 app.get('/all', (req, res) => {
 
-  conn.query(`select * from state_master`,(err,res)=>{
-    if(err) return console.log(err.message);
-    else{
-      State_menu=res;
+  conn.query(`select * from state_master`, (err, res) => {
+    if (err) return console.log(err.message);
+    else {
+      State_menu = res;
       console.log(State_menu);
     }
   })
@@ -312,7 +312,7 @@ app.get('/showall', (req, res) => {
 
   conn.query(`SELECT * FROM personal_info where isDelete='0' order by id desc `, (err, ans) => {
     if (err) return console.log(err.message);
-   
+
     res.render("showall", { ans, currStr: "" });
   })
 })
@@ -330,14 +330,14 @@ app.get('/showall/list', (req, res) => {
 
     allrecords = result1[0].total_rec
 
-})
+  })
   let page = req.query.page || 1;
   offset = (page - 1) * limit;
 
   conn.query(`SELECT * FROM personal_info where isDelete='0' order by id desc limit ${offset}, ${limit}`, (err, ans) => {
     if (err) return console.log(err.message);
-    allrecords = Math.ceil(allrecords / limit)+1;
-    res.json({page:page,data:ans})
+    allrecords = Math.ceil(allrecords / limit) + 1;
+    res.json({ page: page, data: ans })
     // res.render("things", { ans, currStr: "" ,allrecords});
   })
 })
@@ -349,7 +349,7 @@ app.get('/showall/things', (req, res) => {
 
     allrecords = result1[0].total_rec
 
-})
+  })
   let page = req.query.page || 1;
   offset = (page - 1) * limit;
 
@@ -358,7 +358,7 @@ app.get('/showall/things', (req, res) => {
     allrecords = Math.ceil(allrecords / limit);
     // res.json({page:allrecords,data:ans})
     // console.log(allrecords);
-    res.render("things", { ans, currStr: "" ,allrecords});
+    res.render("things", { ans, currStr: "", allrecords });
   })
 })
 
@@ -493,34 +493,34 @@ app.get('/dataDetails/:id', (req, res) => {
 })
 
 var cities;
-app.get('/all/state/:id',(req,res)=>{
+app.get('/all/state/:id', (req, res) => {
   let id = req.params.id;
-  cities_query =`select * from city_master where state_id=${id}`
-  conn.query(cities_query,(err,result)=>{
-    if(err) console.log(err.message); 
-    return res.json({result})
+  cities_query = `select * from city_master where state_id=${id}`
+  conn.query(cities_query, (err, result) => {
+    if (err) console.log(err.message);
+    return res.json({ result })
   })
 })
-app.get('/all/delete/:id',(req,res)=>{
+app.get('/all/delete/:id', (req, res) => {
   let id = req.params.id;
-  delete_query =`update personal_info set isDelete='1' where id=${id}`
-  conn.query(delete_query,(err,result)=>{
-    if(err) console.log(err.message); 
+  delete_query = `update personal_info set isDelete='1' where id=${id}`
+  conn.query(delete_query, (err, result) => {
+    if (err) console.log(err.message);
   })
-  return res.json({message: "got ans"})
+  return res.json({ message: "got ans" })
 })
-app.get('/all/deleteall/:id',(req,res)=>{
+app.get('/all/deleteall/:id', (req, res) => {
   let id = req.params.id;
-  var s_id=id.split(",")
+  var s_id = id.split(",")
   // console.log(s_id);
   // console.log(id);
   // console.log(id);
 
-  for(let i = 0 ; i<s_id.length;i++){
+  for (let i = 0; i < s_id.length; i++) {
     // console.log(s_id[i]);
-    let muldelete_query =`update personal_info set isDelete='1' where id=${s_id[i]}`
-    conn.query(muldelete_query,(err,result)=>{
-      if(err) console.log(err.message);
+    let muldelete_query = `update personal_info set isDelete='1' where id=${s_id[i]}`
+    conn.query(muldelete_query, (err, result) => {
+      if (err) console.log(err.message);
     })
   }
   // return res.json({result})
@@ -528,43 +528,43 @@ app.get('/all/deleteall/:id',(req,res)=>{
 
 
 
-app.get('/all/archive',(req,res)=>{
+app.get('/all/archive', (req, res) => {
 
 
-    let archdelete_query =`select * from personal_info where isDelete='1'`
-    conn.query(archdelete_query,(err,result)=>{
-      if(err) console.log(err.message);
-      let arch= result
-      res.render("archive",{ans:arch})
-    })
+  let archdelete_query = `select * from personal_info where isDelete='1'`
+  conn.query(archdelete_query, (err, result) => {
+    if (err) console.log(err.message);
+    let arch = result
+    res.render("archive", { ans: arch })
+  })
 
 })
 
 
-app.get('/all/restore/:id',(req,res)=>{
+app.get('/all/restore/:id', (req, res) => {
   let id = req.params.id;
-  delete_query =`update personal_info set isDelete='0' where id=${id}`
-  conn.query(delete_query,(err,result)=>{
-    if(err) console.log(err.message); 
+  delete_query = `update personal_info set isDelete='0' where id=${id}`
+  conn.query(delete_query, (err, result) => {
+    if (err) console.log(err.message);
     var ans = result
-    return res.json({message: ans})
+    return res.json({ message: ans })
   })
 })
 
 
 
-app.get('/all/restoreall/:id',(req,res)=>{
+app.get('/all/restoreall/:id', (req, res) => {
   let id = req.params.id;
-  var s_id=id.split(",")
+  var s_id = id.split(",")
   // console.log(s_id);
   // console.log(id);
   // console.log(id);
 
-  for(let i = 0 ; i<s_id.length;i++){
+  for (let i = 0; i < s_id.length; i++) {
     // console.log(s_id[i]);
-    let muldelete_query =`update personal_info set isDelete='0' where id=${s_id[i]}`
-    conn.query(muldelete_query,(err,result)=>{
-      if(err) console.log(err.message);
+    let muldelete_query = `update personal_info set isDelete='0' where id=${s_id[i]}`
+    conn.query(muldelete_query, (err, result) => {
+      if (err) console.log(err.message);
     })
   }
   // return res.json({result})
@@ -576,8 +576,10 @@ app.listen(PORT, console.log(`Server start on port ${PORT}`));
 
 //EDITING FORM
 
+let location;
+let Depart
 
-app.get('/edit/:id',(req,res)=>{
+app.get('/edit/:id', (req, res) => {
   let get_id = req.params.id;
   let personal_data, education_data, experience_data, language_data, technology_data, reference_data, CTC_data;
   let personal_query = `SELECT * FROM personal_info where id = ${get_id}`;
@@ -594,10 +596,10 @@ app.get('/edit/:id',(req,res)=>{
     }
   })
 
-  conn.query(`select * from state_master`,(err,res)=>{
-    if(err) return console.log(err.message);
-    else{
-      State_menu=res;
+  conn.query(`select * from state_master`, (err, res) => {
+    if (err) return console.log(err.message);
+    else {
+      State_menu = res;
       // console.log(State_menu);
     }
   })
@@ -625,14 +627,14 @@ app.get('/edit/:id',(req,res)=>{
     if (err) return err.message
     else {
       Langs = result
-      console.log(Langs);
+      // console.log(Langs);
     }
   })
-  let language_query = `SELECT * FROM Languages_Known where personal_id = ${get_id}`;
+  let language_query = `SELECT * FROM Languages_Known where personal_id = ${get_id} and soft_delete='0'`;
   conn.query(language_query, (err, ans) => {
     if (err) return console.log(err.message);
     language_data = ans;
-    console.log(language_data);
+    // console.log(language_data);
 
   })
   conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=4;`, (err, result) => {
@@ -642,7 +644,7 @@ app.get('/edit/:id',(req,res)=>{
       // console.log(Tech);
     }
   })
-  let technology_query = `SELECT * FROM Technologies where personal_id = ${get_id}`;
+  let technology_query = `SELECT * FROM Technologies where personal_id = ${get_id} and soft_delete='0'`;
   conn.query(technology_query, (err, ans) => {
     if (err) return console.log(err.message);
     technology_data = ans;
@@ -654,13 +656,37 @@ app.get('/edit/:id',(req,res)=>{
   conn.query(reference_query, (err, ans) => {
     if (err) return console.log(err.message);
     reference_data = ans;
+    // console.log(reference_data);
+  })
+  conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=5;`, (err, result) => {
+    if (err) return err.message
+    else {
+      Depart = result
+      // console.log(Depart);
+    }
+  })
+  conn.query(`SELECT option_value FROM Job_application.Options_Master where Option_id=6;`, (err, result) => {
+    if (err) return err.message
+    else {
+      location = result
+      // console.log(location);
+
+    }
   })
 
   let preference_query = `SELECT * FROM CTC where personal_id = ${get_id}`;
   conn.query(preference_query, (err, ans) => {
     if (err) return console.log(err.message);
     CTC_data = ans;
-    res.render("edit", { personal_data, education_data, experience_data,Langauges:Langs,Tech, language_data, technology_data, reference_data, CTC_data ,relationship_menu,State_menu,Course1});
+    // console.log(CTC_data);
+
+    let locpref = (CTC_data[0].Preferred).split(" ");
+    // console.log(locpref);
+    let finalLocPref = locpref.slice(0, -1);
+    // console.log(finalLocPref);
+
+
+    res.render("myupdate", { personal_data, education_data, experience_data, Langauges: Langs, Tech, language_data, technology_data, reference_data, CTC_data, relationship_menu, State_menu, Course1, Depart, location, finalLocPref });
 
   })
 
@@ -674,6 +700,157 @@ app.get('/edit/:id',(req,res)=>{
 //updating query ...
 
 
-app.post('/update/:id',(req,res)=>{
+app.post('/update/:id', (req, res) => {
+  const { fname, lname, Designation, Address, pAddress, Email, phnumber, City, gender, Relationship, State, dob, Zipcode, } = req.body
+  // console.log(fname, lname, Designation, Address, pAddress, Email, phnumber, City, gender, Relationship, State, dob, Zipcode);
+
+  let update_id = req.params.id
+
+  let BI_update = `Update Job_application.personal_info SET first_name ='${fname}',last_name='${lname}',designation='${Designation}',contact_no=${phnumber},address='${Address}',address_2='${pAddress}',email='${Email}',gender='${gender}',city='${City}',dob='${dob}',state='${State}',relationship='${Relationship}',Zipcode='${Zipcode}',isDelete=0,updated_at=NOW() where id=${update_id}`
+  // let BIquery = `Insert into Job_application.personal_info (id,first_name,last_name,designation,contact_no,address,address_2,email,gender,city,dob,state,relationship,Zipcode,isDelete,updated_at) values (${update_id},'${fname}','${lname}','${Designation}',${phnumber},'${Address}','${pAddress}','${Email}','${gender}','${City}','${dob}','${State}','${Relationship}','${Zipcode}',0,NOW())`
+  // console.log(BI_update);
+
+  // INSERT BASIC INFORMATION
+  conn.query(BI_update, (err, result) => {
+    if (err) return console.log(err.message);
+    else {
+      console.log(result);
+    }
+  })
+
+
+
+  //Update Education
+  const { Course, institution, Percentage, Passing_Year, edu_id } = req.body
+  // console.log(typeof(Course, institution, Percentage, Passing_Year,edu_id));
+
+
+  if (typeof (Course, institution, Percentage, Passing_Year) == "object") {
+
+
+    for (let i = 0; i < Course.length; i++) {
+      console.log(Course[i], institution[i], Percentage[i], Passing_Year[i], edu_id[i]);
+      //let EDdetail = `Insert into Job_application.Academic (personal_id,course,board,passing_year,percentage) values('${id}','${Course[i]}', '${institution[i]}',${Percentage[i]},${Passing_Year[i]});`
+      let up_edu_mul = `Update Job_application.Academic SET course='${Course[i]}',board='${institution[i]}',passing_year='${Passing_Year[i]}',percentage=${Percentage[i]} where id=${edu_id[i]};`
+      console.log(up_edu_mul);
+      conn.query(up_edu_mul, (err, result) => {
+        if (err) return console.log(err.message);
+        else {
+
+          console.log(result, "Updated Succesfully");
+        }
+
+      })
+
+    }
+
+  }
+  else {
+    let EDdetails = `Update Job_application.Academic SET course='${Course}',board='${institution}',passing_year='${Passing_Year}',percentage=${Percentage} where id=${edu_id};`
+
+    conn.query(EDdetails, (err, result) => {
+      if (err) return console.log(err.message);
+      else {
+
+        console.log(result, "Updated Succesfully");
+      }
+
+    })
+  }
+
+
+
+  //update langauges
+
+  conn.query(`UPDATE Languages_Known SET soft_delete = '1' where personal_id = ${update_id}`, (err, ans) => {
+    if (err) return console.log(err.message);
+    const { lang_id, langs } = req.body
+    console.log(lang_id, langs);
+    if (!Array.isArray(langs)) {
+      langs = [langs];
+    }
+    for (let i = 0; i < langs.length; i++) {
+      var lang_name = langs[i];
+      console.log(lang_name);
+
+      var r = req.body[langs[i] + "r"];
+
+      var w = req.body[langs[i] + "w"];
+
+      var s = req.body[langs[i] + "s"];
+
+      if (typeof (r) == "undefined") r = "0";
+      if (typeof (w) == "undefined") w = "0";
+      if (typeof (s) == "undefined") s = "0";
+      console.log(r);
+      console.log(w);
+      console.log(s);
+
+      query_lan = `insert into Languages_Known (personal_id,language_name,read_lang,write_lang,speak) values(${update_id},'${lang_name}','${r}','${w}','${s}')`;
+      console.log(query_lan);
+      conn.query(query_lan, (err, ans) => {
+        if (err) return console.log(err.message);
+        else {
+          console.log(ans);
+        }
+      })
+
+    }
+
+  })
+
+  //update technologies
+
+  conn.query(`UPDATE Technologies SET soft_delete = 1 where personal_id = ${update_id}`, (err, ans) => {
+    if (err) return console.log(err.message);
+
+    const { tech } = req.body
+    console.log(tech);
+
+    if (!Array.isArray(tech)) {
+      tech = [tech];
+    }
+
+    for (let i = 0; i < tech.length; i++) {
+      var tech_name = tech[i];
+      var a = req.body[tech_name + 'a']
+      query_lan = `insert into Technologies (personal_id,technology, profiency) values(${update_id},'${tech_name}','${a}')`;
+      conn.query(query_lan, (err, ans) => {
+        if (err) return console.log(err.message);
+        else {
+          console.log(ans);
+        }
+      })
+    }
+  })
+
+
+  // update preferences
+
+  const { ref_name1, ref_email1, ref_name2, ref_email2, Relation1, Relation2, ref_id1, ref_id2 } = req.body;
+  // console.log(ref_name1, ref_email1, ref_name2, ref_email2, Relation1, Relation2 );
+
+
+  // var my_ref1 = `Insert into Job_application.Reference_Tab (personal_id,name,email,relation) values ('${id}','${ref_name1}','${ref_email1}','${Relation1}')`
+  let up_ref1 = `Update Reference_Tab set name='${ref_name1}',email='${ref_email1}', relation='${Relation1}' where id=${ref_id1}`;
+  //  console.log(up_ref1);
+  conn.query(up_ref1, (err, result) => {
+    if (err) return console.log(err.message);
+    console.log(result);
+  })
+  var up_ref2 = `Update Reference_Tab set name='${ref_name2}',email='${ref_email2}', relation='${Relation2}' where id=${ref_id2}`
+  // console.log(up_ref2);
+  conn.query(up_ref2, (err, result) => {
+    if (err) return console.log(err.message);
+    console.log(result);
+  })
+
+
+
+  //Update prefrence
+
+
+
+
 
 })
