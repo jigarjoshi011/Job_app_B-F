@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job application</title>
     <link rel="stylesheet" href="/css/style.css">
+
     <style>
         .required:after {
             content: " *";
@@ -34,7 +35,7 @@
 </head>
 
 <body>
-    <div class="registation">
+    <div class="Update ">
         <form class="main" action="/update/<%= personal_data[0].id %>" method="post">
             <h1 class="title">Update Job Application Form</h1>
             <div class="basic">
@@ -126,8 +127,9 @@
 
                             <select name="Relationship" id="Relationship">
                                 <% for(var i=0 ; i< relationship_menu.length;i++){ %>
-                                    <option value="<%= relationship_menu[i].option_value %>">
-                                        <%= personal_data[0].relationship %>
+                                    <option value="<%= relationship_menu[i].option_value %>" <%
+                                        if(relationship_menu[i].option_value== personal_data[0].relationship) { %> selected <% }%>>
+                                         <%= relationship_menu[i].option_value %>
                                     </option>
                                     <% } %>
                             </select>
@@ -316,6 +318,51 @@
                         </div>
                     </div><br><br>
                 </fieldset> 
+                <fieldset class="bd2">
+                    <legend class="l2">Preferences</legend>
+                    <div class="field8" id="field11">
+                        <div>
+                            <label>Department</label>
+                            <select name="Department" id="Department">
+                                <% for(var i=0 ; i< Depart.length;i++){ %>
+                                    <option value="<%=  Depart[i].option_value %>" <%if(Depart[i].option_value== CTC_data[0].Department) { %> selected <% }%> >
+                                        <%= Depart[i].option_value  %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+
+
+
+                        <div>
+
+                            <label>Expacted CTC</label>&nbsp;
+                            <input name="Expacted_CTC" type="text" id="Expacted_CTC" value="<%=CTC_data[0].Current_CTC%>">
+                            <label>Current CTC</label>&nbsp;
+                            <input name="Current_CTC" type="text" id="Current_CTC" value="<%=CTC_data[0].Expected_CTC%>">
+                        </div>
+
+                        <label> Prefered Location</label> &nbsp;
+                        <select multiple name="loc_name" >
+
+                            <% for(var i=0 ; i< location.length;i++){ %>
+                                <% for(var j=0 ; j< finalLocPref.length;j++){ %>
+                                   
+                                    <option value="<%= location[i].option_value %>" <% if(finalLocPref[j] == location[i].option_value){ %> selected <%  }  %>>
+                                        <%= location[i].option_value %>
+                                        </option>
+                                        
+                                        
+                                        
+                                   <% } %>
+                             <% } %>
+
+                        </select>
+
+
+                    </div>
+
+                </fieldset>
 
 
 
@@ -348,11 +395,11 @@
 
     var City = document.getElementById("City")
     var state_id = document.getElementById("State").value
-    console.log(state_id);
+    //console.log(state_id);
     fetch(`http://localhost:5005/all/state/${state_id}`)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
+            //console.log(data)
             City.innerHTML = ""
             let user_selected_city = `<%= personal_data[0].city %>`;
             data.result.forEach(d => {
@@ -368,12 +415,12 @@
 
     async function selectCity(ele) {
         state_id = ele.value
-        console.log(state_id);
-        console.log("selecyt cities");
+        //console.log(state_id);
+        //console.log("selecyt cities");
         try {
             const selected_State = await fetch(`http://localhost:5005/all/state/${state_id}`);
             var cities = await selected_State.json();
-            console.log(cities);
+            //console.log(cities);
             City.innerHTML = '';
             // City.innerHTML+=`<option>Select City</option>`
             cities.result.forEach(option => {
@@ -381,7 +428,7 @@
             })
 
         } catch (e) {
-            console.log(e);
+            //console.log(e);
         }
     }
     document.getElementById("addEdu").addEventListener('click', () => {
@@ -414,7 +461,7 @@
 
     function updateParent(language) {
         const languageClass = language.id;
-        console.log(languageClass);
+        //console.log(languageClass);
         let ans = true;
         const parentElement = document.querySelector(`#${languageClass}_parent`);
         parentElement.checked = true;
@@ -423,7 +470,7 @@
     }
 
     function selectAll(language) {
-        console.log(language.name);
+        //console.log(language.name);
         if (!language.checked) {
             document.querySelectorAll(`#${language.name}`).forEach((lan) => {
                 lan.checked = false;

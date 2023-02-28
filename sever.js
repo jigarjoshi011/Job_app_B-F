@@ -464,26 +464,26 @@ app.get('/dataDetails/:id', (req, res) => {
     experience_data = ans;
 
   })
-  let language_query = `SELECT * FROM Languages_Known where personal_id = ${get_id}`;
+  let language_query = `SELECT * FROM Languages_Known where personal_id = ${get_id} && soft_delete=0`;
   conn.query(language_query, (err, ans) => {
     if (err) return console.log(err.message);
     language_data = ans;
 
   })
-  let technology_query = `SELECT * FROM Technologies where personal_id = ${get_id}`;
+  let technology_query = `SELECT * FROM Technologies where personal_id = ${get_id} && soft_delete=0`;
   conn.query(technology_query, (err, ans) => {
     if (err) return console.log(err.message);
     technology_data = ans;
 
   })
 
-  let reference_query = `SELECT * FROM Reference_Tab where personal_id = ${get_id}`;
+  let reference_query = `SELECT * FROM Reference_Tab where personal_id = ${get_id}  `;
   conn.query(reference_query, (err, ans) => {
     if (err) return console.log(err.message);
     reference_data = ans;
   })
 
-  let preference_query = `SELECT * FROM CTC where personal_id = ${get_id}`;
+  let preference_query = `SELECT * FROM CTC where personal_id = ${get_id} && soft_delete=0`;
   conn.query(preference_query, (err, ans) => {
     if (err) return console.log(err.message);
     CTC_data = ans;
@@ -720,20 +720,67 @@ app.post('/update/:id', (req, res) => {
 
 
 
-  //Update Education
+  // //Update Education
   const { Course, institution, Percentage, Passing_Year, edu_id } = req.body
   // console.log(typeof(Course, institution, Percentage, Passing_Year,edu_id));
 
 
-  if (typeof (Course, institution, Percentage, Passing_Year) == "object") {
+    if (typeof (Course, institution, Percentage, Passing_Year) == "object") {
 
 
-    for (let i = 0; i < Course.length; i++) {
-      console.log(Course[i], institution[i], Percentage[i], Passing_Year[i], edu_id[i]);
-      //let EDdetail = `Insert into Job_application.Academic (personal_id,course,board,passing_year,percentage) values('${id}','${Course[i]}', '${institution[i]}',${Percentage[i]},${Passing_Year[i]});`
-      let up_edu_mul = `Update Job_application.Academic SET course='${Course[i]}',board='${institution[i]}',passing_year='${Passing_Year[i]}',percentage=${Percentage[i]} where id=${edu_id[i]};`
-      console.log(up_edu_mul);
-      conn.query(up_edu_mul, (err, result) => {
+      for (let i = 0; i < Course.length; i++) {
+        console.log(Course[i], institution[i], Percentage[i], Passing_Year[i], edu_id[i]);
+        console.log(typeof(edu_id[i]));
+        // console.log(edu_id[i]===undefined);
+        console.log((req.params.id));
+        if(edu_id[i]===undefined){
+          console.log("hello");
+          let EDdetail = `Insert into Job_application.Academic (personal_id,course,board,passing_year,percentage) values(${update_id},'${Course[i]}', '${institution[i]}',${Percentage[i]},'${Passing_Year[i]}');`
+
+          conn.query(EDdetail, (err, result) => {
+            if (err) return console.log(err.message);
+            else {
+  
+              console.log(result, "INSERTED Succesfully");
+            }
+  
+          })
+        }
+        else{
+          let up_edu_mul = `Update Job_application.Academic SET course='${Course[i]}',board='${institution[i]}',passing_year='${Passing_Year[i]}',percentage=${Percentage[i]} where id=${edu_id[i]};`
+          console.log(up_edu_mul);
+          conn.query(up_edu_mul, (err, result) => {
+            if (err) return console.log(err.message);
+            else {
+  
+              console.log(result, "Updated Succesfully");
+            }
+  
+          })
+        }
+
+
+
+      }
+
+    }
+    else {
+    
+      
+      if(edu_id==undefined){
+        let up_edu_sig = `Insert into Job_application.Academic (course,board,passing_year,percentage) values('${Course}', '${institution}',${Percentage},${Passing_Year});`
+    
+        conn.query(up_edu_sig, (err, result) => {
+          if (err) return console.log(err.message);
+          else {
+  
+            console.log(result, "Updated Succesfully");
+          }
+  
+        })
+      }
+      let EDdetailsing = `Update Job_application.Academic SET course='${Course}',board='${institution}',passing_year='${Passing_Year}',percentage=${Percentage} where id=${edu_id};`
+      conn.query(EDdetailsing, (err, result) => {
         if (err) return console.log(err.message);
         else {
 
@@ -741,26 +788,16 @@ app.post('/update/:id', (req, res) => {
         }
 
       })
-
     }
-
-  }
-  else {
-    let EDdetails = `Update Job_application.Academic SET course='${Course}',board='${institution}',passing_year='${Passing_Year}',percentage=${Percentage} where id=${edu_id};`
-
-    conn.query(EDdetails, (err, result) => {
-      if (err) return console.log(err.message);
-      else {
-
-        console.log(result, "Updated Succesfully");
-      }
-
-    })
-  }
+  
 
 
 
-  //update langauges
+
+
+
+
+  // //update langauges
 
   conn.query(`UPDATE Languages_Known SET soft_delete = '1' where personal_id = ${update_id}`, (err, ans) => {
     if (err) return console.log(err.message);
@@ -799,7 +836,7 @@ app.post('/update/:id', (req, res) => {
 
   })
 
-  //update technologies
+  // //update technologies
 
   conn.query(`UPDATE Technologies SET soft_delete = 1 where personal_id = ${update_id}`, (err, ans) => {
     if (err) return console.log(err.message);
@@ -825,7 +862,7 @@ app.post('/update/:id', (req, res) => {
   })
 
 
-  // update preferences
+  // // update preferences
 
   const { ref_name1, ref_email1, ref_name2, ref_email2, Relation1, Relation2, ref_id1, ref_id2 } = req.body;
   // console.log(ref_name1, ref_email1, ref_name2, ref_email2, Relation1, Relation2 );
@@ -848,6 +885,28 @@ app.post('/update/:id', (req, res) => {
 
 
   //Update prefrence
+  const { Department, Expacted_CTC, Current_CTC, loc_name } = req.body
+  console.log(Department, Expacted_CTC, Current_CTC);
+  let location = req.body.loc_name;
+  if (!Array.isArray(loc_name)) {
+    loc_name = [loc_name]
+  }
+  let lo_string = "";
+  loc_name.forEach(place => lo_string += place + " ")
+
+
+
+  conn.query(`UPDATE CTC SET soft_delete = 1 where personal_id = ${update_id}`, (err, ans) => {
+    if (err) return console.log(err.message);
+    var dept_up = `insert into CTC ( personal_id,Department,Preferred,Current_CTC,Expected_CTC) values(${update_id},'${Department}','${lo_string}',${Current_CTC},${Expacted_CTC})`
+    conn.query(dept_up, (err, result) => {
+      if (err) return console.log(err.message);
+      console.log(result);
+    })
+
+  })
+
+  res.render("Update_msg")
 
 
 
